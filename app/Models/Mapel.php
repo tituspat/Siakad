@@ -14,7 +14,7 @@ class Mapel extends Model
 
     public function paket()
     {
-        return $this->belongsTo('App\Paket')->withDefault();
+        return $this->belongsTo('App\Models\Paket')->withDefault();
     }
 
     public function sikap($id)

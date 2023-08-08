@@ -18,7 +18,7 @@ class Kelas extends Model
 
     public function paket()
     {
-        return $this->belongsTo('App\Paket')->withDefault();
+        return $this->belongsTo('App\Models\Paket')->withDefault();
     }
 
     protected $table = 'kelas';

@@ -3,18 +3,21 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
-use App\Http\COntrollers\HomeController;
-use App\Http\COntrollers\GuruController;
-use App\Http\COntrollers\JadwalController;
-use App\Http\COntrollers\KelasController;
-use App\Http\COntrollers\MapelController;
-use App\Http\COntrollers\NilaiController;
-use App\Http\COntrollers\PengumumanController;
-use App\Http\COntrollers\RapotController;
-use App\Http\COntrollers\SikapController;
-use App\Http\COntrollers\SiswaController;
-use App\Http\COntrollers\UlanganController;
-use App\Http\COntrollers\UserController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\GuruController;
+use App\Http\Controllers\JadwalController;
+use App\Http\Controllers\KelasController;
+use App\Http\Controllers\MapelController;
+use App\Http\Controllers\NilaiController;
+use App\Http\Controllers\PengumumanController;
+use App\Http\Controllers\RapotController;
+use App\Http\Controllers\SikapController;
+use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\UlanganController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\OwnerController;
+use App\Http\Controllers\SppController;
+
 
 
 /*
@@ -59,6 +62,11 @@ Route::get('/clear-cache', function () {
     Route::post('/pengaturan/ubah-email', [UserController::class, 'ubah_email'])->name('pengaturan.ubah-email');
     Route::get('/pengaturan/password', [UserController::class, 'edit_password'])->name('pengaturan.password');
     Route::post('/pengaturan/ubah-password', [UserController::class, 'ubah_password'])->name('pengaturan.ubah-password');
+
+    Route::get('/data-spp', [SppController::class, 'index'])->name('data-spp');
+    Route::post('/data-spp', [SppController::class, 'store'])->name('data-spp.store');
+
+
   
     Route::middleware(['siswa'])->group(function () {
       Route::get('/jadwal/siswa', [JadwalController::class, 'siswa'])->name('jadwal.siswa');
@@ -76,6 +84,10 @@ Route::get('/clear-cache', function () {
       Route::resource('/sikap', SikapController::class);
       Route::get('/rapot/predikat', [RapotController::class, 'predikat']);
       Route::resource('/rapot', RapotController::class);
+    });
+    
+    Route::middleware(['owner'])->group(function (){
+      Route::get('/owner/data-siswa', [OwnerController::class, 'show'])->name('owner.data-siswa');
     });
   
     Route::middleware(['admin'])->group(function () {
@@ -99,6 +111,8 @@ Route::get('/clear-cache', function () {
         Route::get('/user/restore/{id}', [UserController::class, 'restore_user'])->name('user.restore');
         Route::delete('/user/kill/{id}', [UserController::class, 'kill'])->name('user.kill');
       });
+      
+
       Route::get('/admin/home', [HomeController::class, 'admin'])->name('admin.home');
       Route::get('/admin/pengumuman', [PengumumanController::class, 'index'])->name('admin.pengumuman');
       Route::post('/admin/pengumuman/simpan', [PengumumanController::class, 'simpan'])->name('admin.pengumuman.simpan');

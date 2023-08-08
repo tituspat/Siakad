@@ -144,6 +144,12 @@
                             <p>Absensi Guru</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('data-spp') }}" class="nav-link" id="AbsensiGuru">
+                            <i class="fas fa-dollar-sign nav-icon"></i>
+                            <p>Data Spp</p>
+                        </a>
+                    </li>
                     <li class="nav-item has-treeview" id="liNilai">
                         <a href="#" class="nav-link" id="Nilai">
                             <i class="nav-icon fas fa-file-signature"></i>
@@ -276,9 +282,26 @@
                             <p>Rapot</p>
                         </a>
                     </li>
-                @elseif (Auth::user()->role == 'Owner' && Auth::user()->owner(Auth::user()->kode_owner))
+                @elseif (Auth::user()->role == 'Owner')
+                    <li class="nav-item has-treeview" id="liDashboard">
+                        <a href="#" class="nav-link" id="Dashboard">
+                            <i class="nav-icon fas fa-home"></i>
+                            <p>
+                                Dashboard
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview ml-4">
+                            <li class="nav-item">
+                                <a href="{{ url('/') }}" class="nav-link" id="Home">
+                                    <i class="fas fa-home nav-icon"></i>
+                                    <p>Dashboard</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="nav-item">
-                        <a href="{{ route('siswa.index') }}" class="nav-link" id="DataSiswa">
+                        <a href="{{ route('owner.data-siswa') }}" class="nav-link" id="DataSiswa">
                             <i class="fas fa-users nav-icon"></i>
                             <p>Data Siswa</p>
                         </a>

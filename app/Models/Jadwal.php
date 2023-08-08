@@ -14,7 +14,7 @@ class Jadwal extends Model
 
   public function hari()
   {
-    return $this->belongsTo('App\Hari')->withDefault();
+    return $this->belongsTo('App\Models\Hari')->withDefault();
   }
 
   public function kelas()
@@ -34,7 +34,7 @@ class Jadwal extends Model
 
   public function ruang()
   {
-    return $this->belongsTo('App\Ruang')->withDefault();
+    return $this->belongsTo('App\Models\Ruang')->withDefault();
   }
 
   public function rapot($id)
