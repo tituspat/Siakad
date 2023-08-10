@@ -16,9 +16,11 @@ return new class extends Migration
             $table->timestamps();
             $table->string('judul');
 
-            $table->string('link_video');
-            $table->string('link_materi');
-            $table->string('text');
+            $table->string('link_video')->nullable();
+            $table->string('link_materi')->nullable();
+            $table->string('materi_baca')->nullable();
+            
+            $table->text('text')->nullable();
             
         });
     }

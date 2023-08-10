@@ -6,46 +6,79 @@
 @section('content')
     <div class="col-md-12">
         <div class="card card-outline card-info">
-            <div></div>
-            <form class="form-group" action="{{ route('admin.pengumuman.simpan') }}" method="post">
-                @csrf
-                <div class="card-header">
-                    <button type="submit" name="submit" class="btn btn-outline-primary">
-                        Simpan &nbsp; <i class="nav-icon fas fa-save"></i>
+            <div class="card-header">
+                <h3 class="card-title">
+                    <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target=".bd-example-modal-lg">
+                        <i class="nav-icon fas fa-folder-plus"></i> &nbsp; Tambah materi
                     </button>
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool btn-sm" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-                        <i class="fas fa-times"></i></button>
+                </h3>
+            </div>
+
+            <div class="card-body">
+                @foreach($materi as $m)
+                <div class="card card-outline card-info p-4">
+                    <h1 class="self-center">{{$m->judul}}</h1>
+                    <div class="video-wrapper">{!! $m->link_video !!}</div>
+                    <h3>{{$m->link_materi}}</h3>
+                    <h3>{{$m->judul}}</h3>
+                    <h3>{{$m->materi_baca}}</h3>
+                    
+                    <hr />
+                </div>
+                @endforeach
+            </div>
+        </div>\
+    </div>
+        <!-- Extra large modal -->
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+      <div class="modal-header">
+          <h4 class="modal-title">Tambah Materi ajar</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+          <form action="{{ route('materi.store') }}" method="post" enctype="multipart/form-data">
+            @csrf
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="judul">Judul Materi</label>
+                        <input type="text" id="judul" name="judul" class="form-control @error('judul') is-invalid @enderror">
+                    </div>
+                    <div class="form-group">
+                        <label for="link_video">Link Materi Video</label>
+                        <input type="text" id="link_video" name="link_video" class="form-control @error('link_video') is-invalid @enderror">
+                    </div>
+                    <div class="form-group">
+                        <label for="link_materi_baca">Link Materi Baca</label>
+                        <input type="text" id="link_materi_baca" name=";ink_materi_baca" class="form-control @error('materi_baca') is-invalid @enderror">
+                    </div>
+                    <div class="form-group">
+                        <label for="materi_baca">Materi Baca</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" name="materi_baca" class="custom-file-input @error('materi_baca') is-invalid @enderror" id="materi_baca">
+                                <label class="custom-file-label" for="materi_baca">Choose file</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="text">Keterangan tambahan guru</label>
+                        <input type="text" id="text" name="text" class="form-control @error('link_video') is-invalid @enderror">
                     </div>
                 </div>
-                <div class="card-body pad">
-                    <div class="mb-3">
-                        <input type="hidden" name="id" value="{{ $pengumuman->id }}">
-                        <textarea class="textarea @error('isi') is-invalid @enderror" name="isi" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{ $pengumuman->isi }}</textarea>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="card card-outline card-info">
-            <form class="form-group" action="{{ route('admin.pengumuman.simpan') }}" method="post">
-                @csrf
-                <div class="card-header">
-                    <button type="submit" name="submit" class="btn btn-outline-primary">
-                        Simpan &nbsp; <i class="nav-icon fas fa-save"></i>
-                    </button>
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool btn-sm" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-                        <i class="fas fa-times"></i></button>
-                    </div>
-                </div>
-                <div class="card-body pad">
-                    <div class="mb-3">
-                        <input type="hidden" name="id" value="{{ $pengumuman->id }}">
-                        <textarea class="textarea @error('isi') is-invalid @enderror" name="isi" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{ $pengumuman->isi }}</textarea>
-                    </div>
-                </div>
-            </form>
-        </div>
+            </div>
+          </div>
+          <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal"><i class='nav-icon fas fa-arrow-left'></i> &nbsp; Kembali</button>
+              <button type="submit" class="btn btn-primary"><i class="nav-icon fas fa-save"></i> &nbsp; Tambahkan</button>
+          </form>
+      </div>
+      </div>
+    </div>
     </div>
 @endsection
 @section('script')

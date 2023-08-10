@@ -10,5 +10,10 @@ class Materi extends Model
     use HasFactory;
     protected $fillable = ['judul', 'link_video', 'link_materi', 'text'];
 
+    public function kelas()
+    {
+        return $this->belongsTo('App\Models\Kelas')->withDefault();
+    }
+
     protected $table = 'materi';
 }
