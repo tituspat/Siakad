@@ -17,6 +17,9 @@ use App\Http\Controllers\UlanganController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\SppController;
+use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\PembayaranController;
+use App\Http\Controllers\MateriController;
 
 
 
@@ -49,6 +52,7 @@ Route::get('/clear-cache', function () {
   Route::get('/reset/password/{id}', [UserController::class, 'password'])->name('reset.password')->middleware('guest');
   Route::patch('/reset/password/update/{id}', [UserController::class, 'update_password'])->name('reset.password.update')->middleware('guest');
   
+  
   Route::middleware(['auth'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -65,6 +69,10 @@ Route::get('/clear-cache', function () {
 
     Route::get('/data-spp', [SppController::class, 'index'])->name('data-spp');
     Route::post('/data-spp', [SppController::class, 'store'])->name('data-spp.store');
+    Route::get('/spp/histori', [HistoryController::class, 'index'])->name('spp.history');
+    Route::resource('/spp/pembayaran', PembayaranController::class);
+
+    Route::resource('/materi', MateriController::class);
 
 
   

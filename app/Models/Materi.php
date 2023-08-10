@@ -5,14 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class spp extends Model
+class Materi extends Model
 {
     use HasFactory;
+    protected $fillable = ['judul', 'link_video', 'link_materi', 'text'];
 
-    protected $table = 'spp';
-   
-    protected $fillable = [
-         'tahun', 'nominal'
-    ];
-   
+    protected $table = 'materi';
 }

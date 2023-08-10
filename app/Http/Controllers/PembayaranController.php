@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Pembayaran;
 use App\Models\User;
 use App\Models\Siswa;
-use Alert;
 
 class PembayaranController extends Controller
 {
@@ -14,7 +13,6 @@ class PembayaranController extends Controller
    public function __construct(){
          $this->middleware([
             'auth',
-            'privilege:admin&petugas'
          ]);
     }
 
@@ -30,7 +28,7 @@ class PembayaranController extends Controller
             'user' => User::find(auth()->user()->id)
         ];
       
-        return view('dashboard.entri-pembayaran.index', $data);
+        return view('entri-pembayaran.index', $data);
     }
 
     /**
@@ -65,11 +63,11 @@ class PembayaranController extends Controller
             'jumlah_bayar' => 'required|numeric'
          ], $message);
          
-         if(Siswa::where('nisn',$req->nisn)->exists() == false):
-            Alert::error('Terjadi Kesalahan!', 'Siswa dengan NISN ini Tidak di Temukan');
-           return back();
-            exit;
-         endif;
+         // if(Siswa::where('nisn',$req->nisn)->exists() == false):
+         //    Alert::error('Terjadi Kesalahan!', 'Siswa dengan NISN ini Tidak di Temukan');
+         //   return back();
+         //    exit;
+         // endif;
             
          
          $siswa = Siswa::where('nisn',$req->nisn)->get();
@@ -79,15 +77,12 @@ class PembayaranController extends Controller
          }
          
          Pembayaran::create([
-            'id_petugas' => auth()->user()->id,
             'id_siswa' => $id_siswa,
             'spp_bulan' => $req->spp_bulan,
             'jumlah_bayar' => $req->jumlah_bayar,
          ]);
          
-         Alert::success('Berhasil!', 'Pembayaran Berhasil di Tambahkan!');
-         
-         return back();
+         return redirect()->back()->with('success', 'Pembayaran Berhasil ditambahkan');
     }
 
     /**
@@ -114,7 +109,7 @@ class PembayaranController extends Controller
             'user' => User::find(auth()->user()->id)
          ];
          
-         return view('dashboard.entri-pembayaran.edit', $data);
+         return view('entri-pembayaran.edit', $data);
     }
 
     /**
@@ -146,11 +141,11 @@ class PembayaranController extends Controller
             'jumlah_bayar' => $req->jumlah_bayar
          ]);
          
-         if(Siswa::where('nisn',$req->nisn)->exists() == false):
-            Alert::error('Terjadi Kesalahan!', 'Siswa dengan NISN ini Tidak di Temukan');
-           return back();
-            exit;
-         endif;
+         // if(Siswa::where('nisn',$req->nisn)->exists() == false):
+         //    Alert::error('Terjadi Kesalahan!', 'Siswa dengan NISN ini Tidak di Temukan');
+         //   return back();
+         //    exit;
+         // endif;
 
          if($req->nisn != $pembayaran->siswa->nisn) :
             $siswa = Siswa::where('nisn',$req->nisn)->get();
@@ -165,7 +160,7 @@ class PembayaranController extends Controller
          endif;
          
          Alert::success('Berhasil!', 'Pembayaran berhasil di Edit');
-         return back();
+         return redirect()->back()->with('success', 'Pembayaran berhasil di Edit');
     }
 
     /**
@@ -176,12 +171,12 @@ class PembayaranController extends Controller
      */
     public function destroy($id)
     {
-        if(Pembayaran::find($id)->delete()) :
-            Alert::success('Berhasil!', 'Pembayaran Berhasil di Hapus!');
-         else :
-            Alert::success('Terjadi Kesalahan!', 'Pembayaran Gagal di Tambahkan!');
-         endif;
+      //   if(Pembayaran::find($id)->delete()) :
+      //       Alert::success('Berhasil!', 'Pembayaran Berhasil di Hapus!');
+      //    else :
+      //       Alert::success('Terjadi Kesalahan!', 'Pembayaran Gagal di Tambahkan!');
+      //    endif;
          
-         return back();
+         // return back();
     }
 }

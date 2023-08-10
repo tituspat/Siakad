@@ -6,6 +6,7 @@ use PDF;
 use App\Models\User;
 use App\Models\Kelas;
 use App\Models\Siswa;
+use App\Models\Spp;
 use App\Exports\SiswaExport;
 use App\Imports\SiswaImport;
 use Illuminate\Http\Request;
@@ -23,7 +24,8 @@ class SiswaController extends Controller
     public function index()
     {
         $kelas = Kelas::OrderBy('nama_kelas', 'asc')->get();
-        return view('admin.siswa.index', compact('kelas'));
+        $SPP = spp::OrderBy('nominal', 'asc')->get();
+        return view('admin.siswa.index', compact('kelas', 'SPP'));
     }
 
     /**
@@ -48,6 +50,7 @@ class SiswaController extends Controller
             'no_induk' => 'required|string|unique:siswa',
             'nama_siswa' => 'required',
             'jk' => 'required',
+            'id_spp'=> 'required',
             'kelas_id' => 'required'
         ]);
 
@@ -73,6 +76,7 @@ class SiswaController extends Controller
             'telp' => $request->telp,
             'tmp_lahir' => $request->tmp_lahir,
             'tgl_lahir' => $request->tgl_lahir,
+            'id_spp' => $request->id_spp,
             'foto' => $nameFoto
         ]);
 

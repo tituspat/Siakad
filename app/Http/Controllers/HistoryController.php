@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Alert;
 use App\Models\Pembayaran;
 use App\Models\User;
 
@@ -21,7 +20,7 @@ class HistoryController extends Controller
             'user' => User::find(auth()->user()->id)
          ];
          
-         return view('dashboard.history-pembayaran.index', $data);
+         return view('history-pembayaran.index', $data);
     }
 
     /**

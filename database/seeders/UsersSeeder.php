@@ -23,11 +23,30 @@ class UsersSeeder extends Seeder
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
         ]);
+
         DB::table('users')->insert([
             'name' => 'Owner',
             'email' => 'owner@gmail.com',
             'password' => Hash::make('12345678'),
             'role' => 'Owner',
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
+        ]);
+
+        DB::table('users')->insert([
+            'name' => 'Guru Pertama',
+            'email' => 'guru@gmail.com',
+            'password' => Hash::make('12345678'),
+            'role' => 'Guru',
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
+        ]);
+
+        DB::table('guru')->insert([
+            'id_card' => '502721',
+            'nama_guru' => 'guru pertama',
+            'mapel_id'=> '3',
+            'jk' => 'L',
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
         ]);

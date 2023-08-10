@@ -62,15 +62,9 @@ class SppController extends Controller
                'tahun' => $request->tahun,
                'nominal' => $request->nominal,
            ]);
-         
-           if($store) :
-                Alert::success('Berhasil!', 'Data Berhasil Ditambahkan');
-            else :
-                Alert::error('Gagal!', 'Data Gagal Ditambahkan');
-            endif;
          endif;
       
-      return back();
+      return redirect()->back()->with('success', 'Berhasil Menambvahkan data');
     }
 
     /**

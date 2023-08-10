@@ -10,11 +10,15 @@ class Siswa extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['no_induk', 'nis', 'nama_siswa', 'kelas_id', 'jk', 'telp', 'tmp_lahir', 'tgl_lahir', 'foto'];
+    protected $fillable = ['no_induk', 'nis', 'nama_siswa', 'kelas_id', 'jk', 'telp', 'tmp_lahir', 'tgl_lahir', 'id_spp', 'foto'];
 
     public function kelas()
     {
         return $this->belongsTo('App\Models\Kelas')->withDefault();
+    }
+    public function spp()
+    {
+        return $this->belongsTo('App\Models\spp')->withDefault();
     }
 
     public function ulangan($id)
@@ -37,6 +41,5 @@ class Siswa extends Model
         $nilai = Rapot::where('siswa_id', $id)->where('guru_id', $guru->id)->first();
         return $nilai;
     }
-
     protected $table = 'siswa';
 }

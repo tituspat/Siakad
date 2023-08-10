@@ -25,7 +25,7 @@ class CreateSiswaTable extends Migration
             $table->string('foto');
 
             $table->integer('kelas_id');
-            $table->bigInteger('id_spp');
+            $table->Integer('id_spp');
             
             $table->timestamps();
             $table->softDeletes();

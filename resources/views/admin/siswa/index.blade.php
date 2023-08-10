@@ -168,6 +168,15 @@
                         <label for="tgl_lahir">Tanggal Lahir</label>
                         <input type="date" id="tgl_lahir" name="tgl_lahir" class="form-control @error('tgl_lahir') is-invalid @enderror">
                     </div>
+                    <div class="form-group">
+                        <label for="id_spp">SPP</label>
+                        <select id="id_spp" name="id_spp" class="select2bs4 form-control @error('spp_id') is-invalid @enderror text-black">
+                            <option value="">-- Pilih Kelas --</option>
+                            @foreach ($SPP as $data)
+                                <option value="{{ $data->id }}">{{ $data->nominal }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
             </div>
           </div>

@@ -150,6 +150,12 @@
                             <p>Data Spp</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('spp.history') }}" class="nav-link" id="AbsensiGuru">
+                            <i class="fas fa-dollar-sign nav-icon"></i>
+                            <p>History Pembayaran SPP</p>
+                        </a>
+                    </li>
                     <li class="nav-item has-treeview" id="liNilai">
                         <a href="#" class="nav-link" id="Nilai">
                             <i class="nav-icon fas fa-file-signature"></i>
@@ -189,6 +195,12 @@
                         <a href="{{ route('admin.pengumuman') }}" class="nav-link" id="Pengumuman">
                             <i class="nav-icon fas fa-clipboard"></i>
                             <p>Pengumuman</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('materi.index') }}" class="nav-link" id="Pengumuman">
+                            <i class="nav-icon fas fa-clipboard"></i>
+                            <p>Belajar Mandiri</p>
                         </a>
                     </li>
                 @elseif (Auth::user()->role == 'Guru' && Auth::user()->guru(Auth::user()->id_card))
@@ -262,6 +274,18 @@
                         <a href="{{ route('jadwal.siswa') }}" class="nav-link" id="JadwalSiswa">
                             <i class="fas fa-calendar-alt nav-icon"></i>
                             <p>Jadwal</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('pembayaran.index') }}" class="nav-link" id="AbsensiGuru">
+                            <i class="fas fa-dollar-sign nav-icon"></i>
+                            <p>Pemabayaran spp</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('spp.history') }}" class="nav-link" id="AbsensiGuru">
+                            <i class="fas fa-dollar-sign nav-icon"></i>
+                            <p>History Pembayaran SPP</p>
                         </a>
                     </li>
                     <li class="nav-item">
