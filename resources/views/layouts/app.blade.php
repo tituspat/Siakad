@@ -16,7 +16,7 @@
 <body class="hold-transition login-page" style="background-image: url('{{ asset("img/wallup.jpg") }}'); background-size: cover; background-attachment: fixed;">
   <div class="login-box">
     <div class="login-logo">
-      <img src="{{ asset('img/logosiakad.png') }}" width="100%" alt="">
+    
     </div>
 
     <div class="login-logo" style="color: white;">

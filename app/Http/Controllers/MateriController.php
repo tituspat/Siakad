@@ -5,37 +5,37 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Materi;
+use App\Models\Kelas;
 
+use Illuminate\Support\Facades\Crypt;
 class MateriController extends Controller
 {
     public function index()
     {
         $materi = Materi::OrderBy('created_at', 'asc')->get();
+        $kelas = Kelas::orderBy('nama_kelas')->get();
 
-        return view('materi.index', compact('materi'));
+        return view('materi.index', compact('materi', 'kelas'));
     }
     public function store(Request $request)
-{
-    $request->validate([
-        'judul' => 'string',
-        'link_video' => 'string',
-        'link_materi_baca' => 'string',
-        'materi_baca' => 'string',
-        'text' => '',
-    ]);
+    {
+        $request->validate([
+        ]);
 
-    $embedCode = $this->embedVideo($request->link_video);
+        $embedCode = $this->embedVideo($request->link_video);
+        $kelas_id = Kelas::where('nama_kelas', $request->nama_kelas)->value('id');
 
-    Materi::create([
-        'judul' => $request->judul,
-        'link_video' => $embedCode,
-        'link_materi_baca' => $request->link_materi_baca,
-        'materi_baca' => $request->link_materi,
-        'text' => $request->text,
-    ]);
+        Materi::create([
+            'judul' => $request->judul,
+            'kelas_id' => $kelas_id,
+            'link_video' => $embedCode,
+            'link_materi' => $request->link_materi,
+            'materi_baca' => $request->materi_baca,
+            'text' => $request->text,
+        ]);
 
-    return redirect()->back()->with('success', 'Data berhasil ditambahkan');
-}
+        return redirect()->back()->with('success', 'Data berhasil ditambahkan');
+    }
 
 
     // link converter
@@ -59,25 +59,25 @@ class MateriController extends Controller
     }
 
     private function getYouTubeVideoId($url) {
-// Mendapatkan video ID dari tautan YouTube
-$parsedUrl = parse_url($url);
-    
-if (isset($parsedUrl['host']) && ($parsedUrl['host'] === 'www.youtube.com' || $parsedUrl['host'] === 'youtube.com' || $parsedUrl['host'] === 'youtu.be')) {
-    if (isset($parsedUrl['query'])) {
-        parse_str($parsedUrl['query'], $query);
-        if (isset($query['v'])) {
-            return $query['v'];
+        // Mendapatkan video ID dari tautan YouTube
+        $parsedUrl = parse_url($url);
+        
+        if (isset($parsedUrl['host']) && ($parsedUrl['host'] === 'www.youtube.com' ||   $parsedUrl ['host'] === 'youtube.com' || $parsedUrl['host'] === 'youtu.be')) {
+            if (isset($parsedUrl['query'])) {
+                parse_str($parsedUrl['query'], $query);
+                if (isset($query['v'])) {
+                    return $query['v'];
+                    }
+            }
+        
+            // Jika menggunakan format youtu.be
+            if (isset($parsedUrl['path'])) {
+                $pathSegments = explode('/', trim($parsedUrl['path'], '/'));
+                return end($pathSegments);
+            }
         }
-    }
-    
-    // Jika menggunakan format youtu.be
-    if (isset($parsedUrl['path'])) {
-        $pathSegments = explode('/', trim($parsedUrl['path'], '/'));
-        return end($pathSegments);
-    }
-}
 
-return null; // Jika tidak ditemukan video ID yang valid
+        return null; // Jika tidak ditemukan video ID yang valid
     }
     
     private function getGoogleDriveFileId($url) {
@@ -85,4 +85,11 @@ return null; // Jika tidak ditemukan video ID yang valid
         $parts = explode('/', parse_url($url, PHP_URL_PATH));
         return $parts[count($parts) - 2];
     }
+    public function show($id)
+    {
+        $id = Crypt::decrypt($id);
+        $materi = Materi::where('kelas_id', $id)->first();
+        $kelas = Kelas::where('id', $id);
+        return view('materi.show', compact('materi', 'kelas'));
     }
+}

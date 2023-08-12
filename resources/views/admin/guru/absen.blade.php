@@ -21,7 +21,7 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $data->nama_guru }}</td>
                         <td>
-                            <a href="{{ route('guru.kehadiran', Crypt::encrypt($data->id)) }}" class="btn btn-info btn-sm"><i class="nav-icon fas fa-search-plus"></i> &nbsp; Ditails</a>
+                            <a href="{{ route('guru.kehadiran', Crypt::encrypt($data->id)) }}" class="btn btn-info btn-sm"><i class="nav-icon fas fa-search-plus"></i> &nbsp; Details</a>
                         </td>
                     </tr>
                 @endforeach

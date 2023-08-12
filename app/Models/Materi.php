@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Materi extends Model
 {
     use HasFactory;
-    protected $fillable = ['judul', 'link_video', 'link_materi', 'text'];
+    protected $fillable = ['judul', 'link_video', 'link_materi', 'materi_baca', 'kelas_id', 'text', ];
 
     public function kelas()
     {

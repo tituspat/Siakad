@@ -13,7 +13,7 @@ class CreateAbsensiGuruTable extends Migration
      */
     public function up()
     {
-        Schema::create('absensi_guru', function (Blueprint $table) {
+        Schema::create('absensi_siswa', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->date('tanggal');
             $table->integer('guru_id');
