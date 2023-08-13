@@ -142,56 +142,6 @@ class UserController extends Controller
         // 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $user = User::findorfail($id);
-        if ($user->role == 'Admin') {
-            if ($user->id == Auth::user()->id) {
-                $user->delete();
-                return redirect()->back()->with('warning', 'Data user berhasil dihapus! (Silahkan cek trash data user)');
-            } else {
-                return redirect()->back()->with('error', 'Maaf user ini bukan milik anda!');
-            }
-        } elseif ($user->role == 'Operator') {
-            if ($user->id == Auth::user()->id || Auth::user()->role == 'Admin') {
-                $user->delete();
-                return redirect()->back()->with('warning', 'Data user berhasil dihapus! (Silahkan cek trash data user)');
-            } else {
-                return redirect()->back()->with('error', 'Maaf user ini bukan milik anda!');
-            }
-        } else {
-            $user->delete();
-            return redirect()->back()->with('warning', 'Data user berhasil dihapus! (Silahkan cek trash data user)');
-        }
-    }
-
-    public function trash()
-    {
-        $user = User::onlyTrashed()->paginate(10);
-        return view('admin.user.trash', compact('user'));
-    }
-
-    public function restore_user($id)
-    {
-        $id = Crypt::decrypt($id);
-        $user = User::withTrashed()->findorfail($id);
-        $user->restore();
-        return redirect()->back()->with('info', 'Data user berhasil direstore! (Silahkan cek data user)');
-    }
-
-    public function kill($id)
-    {
-        $user = User::withTrashed()->findorfail($id);
-        $user->forceDelete();
-        return redirect()->back()->with('success', 'Data user berhasil dihapus secara permanent');
-    }
-
     public function email(Request $request)
     {
         $user = User::where('email', $request->email)->first();

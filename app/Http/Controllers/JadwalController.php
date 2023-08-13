@@ -13,8 +13,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
 use PDF;
-use App\Exports\JadwalExport;
-use App\Imports\JadwalImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 
@@ -123,40 +121,6 @@ class JadwalController extends Controller
         // 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $jadwal = Jadwal::findorfail($id);
-        $jadwal->delete();
-
-        return redirect()->back()->with('warning', 'Data jadwal berhasil dihapus! (Silahkan cek trash data jadwal)');
-    }
-
-    public function trash()
-    {
-        $jadwal = Jadwal::onlyTrashed()->get();
-        return view('admin.jadwal.trash', compact('jadwal'));
-    }
-
-    public function restore_jadwal($id)
-    {
-        $id = Crypt::decrypt($id);
-        $jadwal = Jadwal::withTrashed()->findorfail($id);
-        $jadwal->restore();
-        return redirect()->back()->with('info', 'Data jadwal berhasil direstore! (Silahkan cek data jadwal)');
-    }
-
-    public function kill($id)
-    {
-        $jadwal = Jadwal::withTrashed()->findorfail($id);
-        $jadwal->forceDelete();
-        return redirect()->back()->with('success', 'Data jadwal berhasil dihapus secara permanent');
-    }
 
     public function view(Request $request)
     {
@@ -214,23 +178,6 @@ class JadwalController extends Controller
         $kelas = Kelas::findorfail($siswa->kelas_id);
         $jadwal = Jadwal::orderBy('hari_id')->OrderBy('jam_mulai')->where('kelas_id', $kelas->id)->get();
         return view('siswa.jadwal', compact('jadwal', 'kelas', 'siswa'));
-    }
-
-    public function export_excel()
-    {
-        return Excel::download(new JadwalExport, 'jadwal.xlsx');
-    }
-
-    public function import_excel(Request $request)
-    {
-        $this->validate($request, [
-            'file' => 'required|mimes:csv,xls,xlsx'
-        ]);
-        $file = $request->file('file');
-        $nama_file = rand() . $file->getClientOriginalName();
-        $file->move('file_jadwal', $nama_file);
-        Excel::import(new JadwalImport, public_path('/file_jadwal/' . $nama_file));
-        return redirect()->back()->with('success', 'Data Siswa Berhasil Diimport!');
     }
 
     public function deleteAll()

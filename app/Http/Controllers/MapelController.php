@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Jadwal;
 use App\Models\Mapel;
-use App\Models\Paket;
 use App\Models\Guru;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -21,8 +20,7 @@ class MapelController extends Controller
     public function index()
     {
         $mapel = Mapel::OrderBy('kelompok', 'asc')->OrderBy('nama_mapel', 'asc')->get();
-        $paket = Paket::all();
-        return view('admin.mapel.index', compact('mapel', 'paket'));
+        return view('admin.mapel.index', compact('mapel', ));
     }
 
     /**
@@ -45,7 +43,6 @@ class MapelController extends Controller
     {
         $this->validate($request, [
             'nama_mapel' => 'required',
-            'paket_id' => 'required',
             'kelompok' => 'required'
         ]);
 
@@ -55,7 +52,6 @@ class MapelController extends Controller
             ],
             [
                 'nama_mapel' => $request->nama_mapel,
-                'paket_id' => $request->paket_id,
                 'kelompok' => $request->kelompok,
             ]
         );
@@ -84,8 +80,7 @@ class MapelController extends Controller
     {
         $id = Crypt::decrypt($id);
         $mapel = Mapel::findorfail($id);
-        $paket = Paket::all();
-        return view('admin.mapel.edit', compact('mapel', 'paket'));
+        return view('admin.mapel.edit', compact('mapel',));
     }
 
     /**
@@ -100,69 +95,6 @@ class MapelController extends Controller
         // 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $mapel = Mapel::findorfail($id);
-        $countJadwal = Jadwal::where('mapel_id', $mapel->id)->count();
-        if ($countJadwal >= 1) {
-            $jadwal = Jadwal::where('mapel_id', $mapel->id)->delete();
-        } else {
-        }
-        $countGuru = Guru::where('mapel_id', $mapel->id)->count();
-        if ($countGuru >= 1) {
-            $guru = Guru::where('mapel_id', $mapel->id)->delete();
-        } else {
-        }
-        $mapel->delete();
-        return redirect()->back()->with('warning', 'Data mapel berhasil dihapus! (Silahkan cek trash data mapel)');
-    }
-
-    public function trash()
-    {
-        $mapel = Mapel::onlyTrashed()->get();
-        return view('admin.mapel.trash', compact('mapel'));
-    }
-
-    public function restore_mapel($id)
-    {
-        $id = Crypt::decrypt($id);
-        $mapel = Mapel::withTrashed()->findorfail($id);
-        $countJadwal = Jadwal::withTrashed()->where('mapel_id', $mapel->id)->count();
-        if ($countJadwal >= 1) {
-            $jadwal = Jadwal::withTrashed()->where('mapel_id', $mapel->id)->restore();
-        } else {
-        }
-        $countGuru = Guru::withTrashed()->where('mapel_id', $mapel->id)->count();
-        if ($countGuru >= 1) {
-            $guru = Guru::withTrashed()->where('mapel_id', $mapel->id)->restore();
-        } else {
-        }
-        $mapel->restore();
-        return redirect()->back()->with('info', 'Data mapel berhasil direstore! (Silahkan cek data mapel)');
-    }
-
-    public function kill($id)
-    {
-        $mapel = Mapel::withTrashed()->findorfail($id);
-        $countJadwal = Jadwal::withTrashed()->where('mapel_id', $mapel->id)->count();
-        if ($countJadwal >= 1) {
-            $jadwal = Jadwal::withTrashed()->where('mapel_id', $mapel->id)->forceDelete();
-        } else {
-        }
-        $countGuru = Guru::withTrashed()->where('mapel_id', $mapel->id)->count();
-        if ($countGuru >= 1) {
-            $guru = Guru::withTrashed()->where('mapel_id', $mapel->id)->forceDelete();
-        } else {
-        }
-        $mapel->forceDelete();
-        return redirect()->back()->with('success', 'Data mapel berhasil dihapus secara permanent');
-    }
 
     public function getMapelJson(Request $request)
     {

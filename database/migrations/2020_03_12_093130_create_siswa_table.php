@@ -16,7 +16,6 @@ class CreateSiswaTable extends Migration
         Schema::create('siswa', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('no_induk', 30);
-            $table->string('nis', 30)->nullable();
             $table->string('nama_siswa', 50);
             $table->enum('jk', ['L', 'P']);
             $table->string('telp', 15)->nullable();

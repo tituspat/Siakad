@@ -7,8 +7,6 @@ use App\Models\User;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\Spp;
-use App\Exports\SiswaExport;
-use App\Imports\SiswaImport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
@@ -148,63 +146,7 @@ class SiswaController extends Controller
         return redirect()->route('siswa.index')->with('success', 'Data siswa berhasil diperbarui!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $siswa = Siswa::findorfail($id);
-        $countUser = User::where('no_induk', $siswa->no_induk)->count();
-        if ($countUser >= 1) {
-            $user = User::where('no_induk', $siswa->no_induk)->first();
-            $siswa->delete();
-            $user->delete();
-            return redirect()->back()->with('warning', 'Data siswa berhasil dihapus! (Silahkan cek trash data siswa)');
-        } else {
-            $siswa->delete();
-            return redirect()->back()->with('warning', 'Data siswa berhasil dihapus! (Silahkan cek trash data siswa)');
-        }
-    }
 
-    public function trash()
-    {
-        $siswa = Siswa::onlyTrashed()->get();
-        return view('admin.siswa.trash', compact('siswa'));
-    }
-
-    public function restore_siswa($id)
-    {
-        $id = Crypt::decrypt($id);
-        $siswa = Siswa::withTrashed()->findorfail($id);
-        $countUser = User::withTrashed()->where('no_induk', $siswa->no_induk)->count();
-        if ($countUser >= 1) {
-            $user = User::withTrashed()->where('no_induk', $siswa->no_induk)->first();
-            $siswa->restore();
-            $user->restore();
-            return redirect()->back()->with('info', 'Data siswa berhasil direstore! (Silahkan cek data siswa)');
-        } else {
-            $siswa->restore();
-            return redirect()->back()->with('info', 'Data siswa berhasil direstore! (Silahkan cek data siswa)');
-        }
-    }
-
-    public function kill($id)
-    {
-        $siswa = Siswa::withTrashed()->findorfail($id);
-        $countUser = User::withTrashed()->where('no_induk', $siswa->no_induk)->count();
-        if ($countUser >= 1) {
-            $user = User::withTrashed()->where('no_induk', $siswa->no_induk)->first();
-            $siswa->forceDelete();
-            $user->forceDelete();
-            return redirect()->back()->with('success', 'Data siswa berhasil dihapus secara permanent');
-        } else {
-            $siswa->forceDelete();
-            return redirect()->back()->with('success', 'Data siswa berhasil dihapus secara permanent');
-        }
-    }
 
     public function ubah_foto($id)
     {
@@ -264,23 +206,6 @@ class SiswaController extends Controller
         $siswa = Siswa::where('kelas_id', $id)->OrderBy('nama_siswa', 'asc')->get();
         $kelas = Kelas::findorfail($id);
         return view('admin.siswa.show', compact('siswa', 'kelas'));
-    }
-
-    public function export_excel()
-    {
-        return Excel::download(new SiswaExport, 'siswa.xlsx');
-    }
-
-    public function import_excel(Request $request)
-    {
-        $this->validate($request, [
-            'file' => 'required|mimes:csv,xls,xlsx'
-        ]);
-        $file = $request->file('file');
-        $nama_file = rand() . $file->getClientOriginalName();
-        $file->move('file_siswa', $nama_file);
-        Excel::import(new SiswaImport, public_path('/file_siswa/' . $nama_file));
-        return redirect()->back()->with('success', 'Data Siswa Berhasil Diimport!');
     }
 
     public function deleteAll()

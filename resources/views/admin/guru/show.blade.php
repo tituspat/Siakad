@@ -1,10 +1,10 @@
 @extends('template_backend.home')
 @section('heading')
-  Data Guru {{ $mapel->nama_mapel }}
+  Data Guru {{ $kelas->nama_kelas }}
 @endsection
 @section('page')
   <li class="breadcrumb-item active"><a href="{{ route('guru.index') }}">Guru</a></li>
-  <li class="breadcrumb-item active">{{ $mapel->nama_mapel }}</li>
+  <li class="breadcrumb-item active">{{ $kelas->nama_kelas }}</li>
 @endsection
 @section('content')
 <div class="col-md-12">

@@ -11,10 +11,6 @@
                 <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target=".bd-example-modal-lg">
                     <i class="nav-icon fas fa-folder-plus"></i> &nbsp; Tambah Data Guru
                 </button>
-                <a href="{{ route('guru.export_excel') }}" class="btn btn-success btn-sm my-3" target="_blank"><i class="nav-icon fas fa-file-export"></i> &nbsp; EXPORT EXCEL</a>
-                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#importExcel">
-                    <i class="nav-icon fas fa-file-import"></i> &nbsp; IMPORT EXCEL
-                </button>
                 <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#dropTable">
                     <i class="nav-icon fas fa-minus-circle"></i> &nbsp; Drop
                 </button>
@@ -78,17 +74,17 @@
             <thead>
                 <tr>
                     <th>No.</th>
-                    <th>Nama Mapel</th>
+                    <th>Nama kelas</th>
                     <th>Lihat Guru</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($mapel as $data)
+                @foreach ($kelas as $data)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $data->nama_mapel }}</td>
+                        <td>{{ $data->nama_kelas }}</td>
                         <td>
-                            <a href="{{ route('guru.mapel', Crypt::encrypt($data->id)) }}" class="btn btn-info btn-sm"><i class="nav-icon fas fa-search-plus"></i> &nbsp; Details</a>
+                            <a href="{{ route('guru.kelas', Crypt::encrypt($data->id)) }}" class="btn btn-info btn-sm"><i class="nav-icon fas fa-search-plus"></i> &nbsp; Details</a>
                         </td>
                     </tr>
                 @endforeach
@@ -144,11 +140,11 @@
                         <input type="text" id="nip" name="nip" onkeypress="return inputAngka(event)" class="form-control @error('nip') is-invalid @enderror">
                     </div>
                     <div class="form-group">
-                        <label for="mapel_id">Mapel</label>
-                        <select id="mapel_id" name="mapel_id" class="select2bs4 form-control @error('mapel_id') is-invalid @enderror">
-                            <option value="">-- Pilih Mapel --</option>
-                            @foreach ($mapel as $data)
-                                <option value="{{ $data->id }}">{{ $data->nama_mapel }}</option>
+                        <label for="kelas_id">kelas</label>
+                        <select id="kelas_id" name="kelas_id" class="select2bs4 form-control @error('kelas_id') is-invalid @enderror">
+                            <option value="">-- Pilih kelas --</option>
+                            @foreach ($kelas as $data)
+                                <option value="{{ $data->id }}">{{ $data->nama_kelas }}</option>
                             @endforeach
                         </select>
                     </div>

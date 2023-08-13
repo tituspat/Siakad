@@ -155,9 +155,7 @@
                 <div class="position-relative mb-4">
                     <div class="row">
                         <div class="col-md-8">
-                            <div class="chart-responsive">
-                                <canvas id="pieChartPaket" height="150"></canvas>
-                            </div>
+
                         </div>
                         <div class="col-md-4">
                             <ul class="chart-legend clearfix">
@@ -231,35 +229,12 @@
             })
 
             
-            var pieChartCanvasPaket = $('#pieChartPaket').get(0).getContext('2d')
-            var pieDataPaket        = {
-                labels: [
-                    'Bisnis kontruksi dan Properti',
-                    'Desain Permodelan dan Informasi Bangunan',
-                    'Elektronika Industri',
-                    'Otomasi Industri',
-                    'Teknik dan Bisnis Sepeda Motor',
-                    'Rekayasa Perangkat Lunak',
-                    'Teknik Pemesinan',
-                    'Teknik Pengelasan',
-                ],
-                datasets: [
-                    {
-                    data: [{{ $bkp }}, {{ $dpib }}, {{ $ei }}, {{ $oi }}, {{ $tbsm }}, {{ $rpl }}, {{ $tpm }}, {{ $las }}],
-                    backgroundColor : ['#d4c148', '#ba6906', '#ff990a', '#00a352', '#2cabe6', '#999999', '#0b2e75', '#7980f7'],
-                    }
-                ]
-            }
+    
             var pieOptions     = {
                 legend: {
                     display: false
                 }
             }
-            var pieChart = new Chart(pieChartCanvasPaket, {
-                type: 'doughnut',
-                data: pieDataPaket,
-                options: pieOptions      
-            })
         })
         
         $("#Dashboard").addClass("active");

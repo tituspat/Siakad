@@ -118,21 +118,19 @@ class SppController extends Controller
             
             return redirect('dashboard/data-spp');
     }
-
-    /**
-     * Remove the specified resource from storage.
+            /**
+     * Display a listing of the resource.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function siswa()
     {
-        if(Spp::find($id)->delete()) :
-            Alert::success('Berhasil!', 'Data Berhasil Dihapus');
-        else :
-            Alert::error('Berhasil!', 'Data Gagal Dihapus');
-        endif;
+        $data = [
+            'spp' => Spp::orderBy('id', 'DESC')->paginate(10),
+            'user' => Siswa::find(auth()->user()->id)
+        ];
       
-        return back();
+         return view('siswa.spp.index', $data);
     }
+
 }

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Kelas;
 use App\Models\Guru;
-use App\Models\Paket;
 use App\Models\Jadwal;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
@@ -22,8 +21,8 @@ class KelasController extends Controller
     {
         $kelas = Kelas::OrderBy('nama_kelas', 'asc')->get();
         $guru = Guru::OrderBy('nama_guru', 'asc')->get();
-        $paket = Paket::all();
-        return view('admin.kelas.index', compact('kelas', 'guru', 'paket'));
+        
+        return view('admin.kelas.index', compact('kelas', 'guru'));
     }
 
     /**
@@ -48,13 +47,13 @@ class KelasController extends Controller
         if ($request->id != '') {
             $this->validate($request, [
                 'nama_kelas' => 'required|min:6|max:10',
-                'paket_id' => 'required',
+                
                 'guru_id' => 'required|unique:kelas',
             ]);
         } else {
             $this->validate($request, [
                 'nama_kelas' => 'required|unique:kelas|min:6|max:10',
-                'paket_id' => 'required',
+                
                 'guru_id' => 'required|unique:kelas',
             ]);
         }
@@ -65,7 +64,7 @@ class KelasController extends Controller
             ],
             [
                 'nama_kelas' => $request->nama_kelas,
-                'paket_id' => $request->paket_id,
+                
                 'guru_id' => $request->guru_id,
             ]
         );
@@ -107,69 +106,7 @@ class KelasController extends Controller
         // 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $kelas = Kelas::findorfail($id);
-        $countJadwal = Jadwal::where('kelas_id', $kelas->id)->count();
-        if ($countJadwal >= 1) {
-            Jadwal::where('kelas_id', $kelas->id)->delete();
-        } else {
-        }
-        $countSiswa = Siswa::where('kelas_id', $kelas->id)->count();
-        if ($countSiswa >= 1) {
-            Siswa::where('kelas_id', $kelas->id)->delete();
-        } else {
-        }
-        $kelas->delete();
-        return redirect()->back()->with('warning', 'Data kelas berhasil dihapus! (Silahkan cek trash data kelas)');
-    }
-
-    public function trash()
-    {
-        $kelas = Kelas::onlyTrashed()->get();
-        return view('admin.kelas.trash', compact('kelas'));
-    }
-
-    public function restore_kelas($id)
-    {
-        $id = Crypt::decrypt($id);
-        $kelas = Kelas::withTrashed()->findorfail($id);
-        $countJadwal = Jadwal::withTrashed()->where('kelas_id', $kelas->id)->count();
-        if ($countJadwal >= 1) {
-            Jadwal::withTrashed()->where('kelas_id', $kelas->id)->restore();
-        } else {
-        }
-        $countSiswa = Siswa::withTrashed()->where('kelas_id', $kelas->id)->count();
-        if ($countSiswa >= 1) {
-            Siswa::withTrashed()->where('kelas_id', $kelas->id)->restore();
-        } else {
-        }
-        $kelas->restore();
-        return redirect()->back()->with('info', 'Data kelas berhasil direstore! (Silahkan cek data kelas)');
-    }
-
-    public function kill($id)
-    {
-        $kelas = Kelas::withTrashed()->findorfail($id);
-        $countJadwal = Jadwal::withTrashed()->where('kelas_id', $kelas->id)->count();
-        if ($countJadwal >= 1) {
-            Jadwal::withTrashed()->where('kelas_id', $kelas->id)->forceDelete();
-        } else {
-        }
-        $countSiswa = Siswa::withTrashed()->where('kelas_id', $kelas->id)->count();
-        if ($countSiswa >= 1) {
-            Siswa::withTrashed()->where('kelas_id', $kelas->id)->forceDelete();
-        } else {
-        }
-        $kelas->forceDelete();
-        return redirect()->back()->with('success', 'Data kelas berhasil dihapus secara permanent');
-    }
+ 
 
     public function getEdit(Request $request)
     {
@@ -178,7 +115,7 @@ class KelasController extends Controller
             $newForm[] = array(
                 'id' => $val->id,
                 'nama' => $val->nama_kelas,
-                'paket_id' => $val->paket_id,
+                
                 'guru_id' => $val->guru_id,
             );
         }

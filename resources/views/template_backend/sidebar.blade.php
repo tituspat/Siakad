@@ -10,7 +10,9 @@
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                @if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Operator')
+
+            <!-- admin -->
+                @if (Auth::user()->role == 'Admin')
                     <li class="nav-item has-treeview" id="liDashboard">
                         <a href="#" class="nav-link" id="Dashboard">
                             <i class="nav-icon fas fa-home"></i>
@@ -124,6 +126,8 @@
                             <p>Pengumuman</p>
                         </a>
                     </li>
+
+                    <!-- Guru  -->
                 @elseif (Auth::user()->role == 'Guru' || Auth::user()->guru(Auth::user()->id_card))
                     <li class="nav-item has-treeview">
                         <a href="{{ url('/') }}" class="nav-link" id="Home">
@@ -184,6 +188,8 @@
                             </li>
                         </ul>
                     </li>
+
+                    <!-- Siswa -->
                 @elseif (Auth::user()->role == 'Siswa' && Auth::user()->siswa(Auth::user()->no_induk))
                     <li class="nav-item has-treeview">
                         <a href="{{ url('/') }}" class="nav-link" id="Home">
@@ -198,15 +204,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('pembayaran.index') }}" class="nav-link" id="AbsensiGuru">
+                        <a href="{{ route('spp.siswa') }}" class="nav-link" id="SppSiswa">
                             <i class="fas fa-dollar-sign nav-icon"></i>
-                            <p>Pemabayaran spp</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('spp.history') }}" class="nav-link" id="AbsensiGuru">
-                            <i class="fas fa-dollar-sign nav-icon"></i>
-                            <p>History Pembayaran SPP</p>
+                            <p>SPP</p>
                         </a>
                     </li>
                     <li class="nav-item">

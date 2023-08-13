@@ -52,7 +52,7 @@ Route::get('/clear-cache', function () {
   Route::get('/reset/password/{id}', [UserController::class, 'password'])->name('reset.password')->middleware('guest');
   Route::patch('/reset/password/update/{id}', [UserController::class, 'update_password'])->name('reset.password.update')->middleware('guest');
   
-  
+  // auth || Global
   Route::middleware(['auth'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -75,14 +75,15 @@ Route::get('/clear-cache', function () {
     Route::resource('/materi', MateriController::class);
 
 
-  
+  // Siswa
     Route::middleware(['siswa'])->group(function () {
       Route::get('/jadwal/siswa', [JadwalController::class, 'siswa'])->name('jadwal.siswa');
       Route::get('/ulangan/siswa', [UlanganController::class, 'siswa'])->name('ulangan.siswa');
       Route::get('/sikap/siswa', [SikapController::class, 'siswa'])->name('sikap.siswa');
       Route::get('/rapot/siswa', [RapotController::class, 'siswa'])->name('rapot.siswa');
+      Route::get('/spp/siswa', [SppController::class, 'siswa'])->name('spp.siswa');
     });
-  
+  // Guru
     Route::middleware(['guru'])->group(function () {
       Route::get('/absen/harian', [GuruController::class, 'absen'])->name('absen.harian');
       Route::post('/absen/simpan', [GuruController::class, 'simpan'])->name('absen.simpan');
@@ -93,41 +94,21 @@ Route::get('/clear-cache', function () {
       Route::get('/rapot/predikat', [RapotController::class, 'predikat']);
       Route::resource('/rapot', RapotController::class);
     });
-    
+    // Owner
     Route::middleware(['owner'])->group(function (){
       Route::get('/owner/data-siswa', [OwnerController::class, 'show'])->name('owner.data-siswa');
     });
-  
-    Route::middleware(['admin'])->group(function () {
-      Route::middleware(['trash'])->group(function () {
-        Route::get('/jadwal/trash', [JadwalController::class, 'trash'])->name('jadwal.trash');
-        Route::get('/jadwal/restore/{id}', [JadwalController::class, 'restore_jadwal'])->name('jadwal.restore');
-        Route::delete('/jadwal/kill/{id}', [JadwalController::class, 'kill'])->name('jadwal.kill');
-        Route::get('/guru/trash', [GuruController::class, 'trash'])->name('guru.trash');
-        Route::get('/guru/restore/{id}', [GuruController::class, 'restore_guru'])->name('guru.restore');
-        Route::delete('/guru/kill/{id}', [GuruController::class, 'kill'])->name('guru.kill');
-        Route::get('/kelas/trash', [KelasController::class, 'trash'])->name('kelas.trash');
-        Route::get('/kelas/restore/{id}', [KelasController::class, 'restore_kelas'])->name('kelas.restore');
-        Route::delete('/kelas/kill/{id}', [KelasController::class, 'kill'])->name('kelas.kill');
-        Route::get('/siswa/trash', [SiswaController::class, 'trash'])->name('siswa.trash');
-        Route::get('/siswa/restore/{id}', [SiswaController::class, 'restore_siswa'])->name('siswa.restore');
-        Route::delete('/siswa/kill/{id}', [SiswaController::class, 'kill'])->name('siswa.kill');
-        Route::get('/mapel/trash', [MapelController::class, 'trash'])->name('mapel.trash');
-        Route::get('/mapel/restore/{id}', [MapelController::class, 'restore_mapel'])->name('mapel.restore');
-        Route::delete('/mapel/kill/{id}', [MapelController::class, 'kill'])->name('mapel.kill');
-        Route::get('/user/trash', [UserController::class, 'trash'])->name('user.trash');
-        Route::get('/user/restore/{id}', [UserController::class, 'restore_user'])->name('user.restore');
-        Route::delete('/user/kill/{id}', [UserController::class, 'kill'])->name('user.kill');
-      });
-      
 
+    
+  // Admin
+    Route::middleware(['admin'])->group(function () {
       Route::get('/admin/home', [HomeController::class, 'admin'])->name('admin.home');
       Route::get('/admin/pengumuman', [PengumumanController::class, 'index'])->name('admin.pengumuman');
       Route::post('/admin/pengumuman/simpan', [PengumumanController::class, 'simpan'])->name('admin.pengumuman.simpan');
       Route::get('/guru/absensi', [GuruController::class, 'absensi'])->name('guru.absensi');
       Route::get('/guru/kehadiran/{id}', [GuruController::class, 'kehadiran'])->name('guru.kehadiran');
       Route::get('/absen/json', [GuruController::class, 'json']);
-      Route::get('/guru/mapel/{id}', [GuruController::class, 'mapel'])->name('guru.mapel');
+      Route::get('/guru/kelas/{id}', [GuruController::class, 'kelas'])->name('guru.kelas');
       Route::get('/guru/ubah-foto/{id}', [GuruController::class, 'ubah_foto'])->name('guru.ubah-foto');
       Route::post('/guru/update-foto/{id}', [GuruController::class, 'update_foto'])->name('guru.update-foto');
       Route::post('/guru/upload', [GuruController::class, 'upload'])->name('guru.upload');

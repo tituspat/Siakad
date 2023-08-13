@@ -7,14 +7,12 @@ use App\Http\Controllers\Controller;
 use Auth;
 use App\models\User;
 use App\models\Guru;
-use App\models\Mapel;
+use App\models\Kelas;
 use App\models\Jadwal;
 use App\models\Absen;
 use App\models\Kehadiran;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
-use App\Exports\GuruExport;
-use App\Imports\GuruImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\models\Nilai;
 
@@ -27,9 +25,9 @@ class GuruController extends Controller
      */
     public function index()
     {
-        $mapel = Mapel::orderBy('nama_mapel')->get();
+        $kelas = Kelas::orderBy('id')->get();
         $max = Guru::max('id_card');
-        return view('admin.guru.index', compact('mapel', 'max'));
+        return view('admin.guru.index', compact('kelas', 'max'));
     }
 
     /**
@@ -53,7 +51,6 @@ class GuruController extends Controller
         $this->validate($request, [
             'id_card' => 'required',
             'nama_guru' => 'required',
-            'mapel_id' => 'required',
             'kode' => 'required|string|unique:guru|min:2|max:3',
             'jk' => 'required'
         ]);
@@ -75,7 +72,6 @@ class GuruController extends Controller
             'id_card' => $request->id_card,
             'nip' => $request->nip,
             'nama_guru' => $request->nama_guru,
-            'mapel_id' => $request->mapel_id,
             'kode' => $request->kode,
             'jk' => $request->jk,
             'telp' => $request->telp,
@@ -129,7 +125,6 @@ class GuruController extends Controller
     {
         $this->validate($request, [
             'nama_guru' => 'required',
-            'mapel_id' => 'required',
             'jk' => 'required',
         ]);
 
@@ -144,7 +139,6 @@ class GuruController extends Controller
         }
         $guru_data = [
             'nama_guru' => $request->nama_guru,
-            'mapel_id' => $request->mapel_id,
             'jk' => $request->jk,
             'telp' => $request->telp,
             'tmp_lahir' => $request->tmp_lahir,
@@ -153,70 +147,6 @@ class GuruController extends Controller
         $guru->update($guru_data);
 
         return redirect()->route('guru.index')->with('success', 'Data guru berhasil diperbarui!');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $guru = Guru::findorfail($id);
-        $countJadwal = Jadwal::where('guru_id', $guru->id)->count();
-        if ($countJadwal >= 1) {
-            $jadwal = Jadwal::where('guru_id', $guru->id)->delete();
-        } else {
-        }
-        $countUser = User::where('id_card', $guru->id_card)->count();
-        if ($countUser >= 1) {
-            $user = User::where('id_card', $guru->id_card)->delete();
-        } else {
-        }
-        $guru->delete();
-        return redirect()->route('guru.index')->with('warning', 'Data guru berhasil dihapus! (Silahkan cek trash data guru)');
-    }
-
-    public function trash()
-    {
-        $guru = Guru::onlyTrashed()->get();
-        return view('admin.guru.trash', compact('guru'));
-    }
-
-    public function restore_guru($id)
-    {
-        $id = Crypt::decrypt($id);
-        $guru = Guru::withTrashed()->findorfail($id);
-        $countJadwal = Jadwal::withTrashed()->where('guru_id', $guru->id)->count();
-        if ($countJadwal >= 1) {
-            $jadwal = Jadwal::withTrashed()->where('guru_id', $guru->id)->restore();
-        } else {
-        }
-        $countUser = User::withTrashed()->where('id_card', $guru->id_card)->count();
-        if ($countUser >= 1) {
-            $user = User::withTrashed()->where('id_card', $guru->id_card)->restore();
-        } else {
-        }
-        $guru->restore();
-        return redirect()->back()->with('info', 'Data guru berhasil direstore! (Silahkan cek data guru)');
-    }
-
-    public function kill($id)
-    {
-        $guru = Guru::withTrashed()->findorfail($id);
-        $countJadwal = Jadwal::withTrashed()->where('guru_id', $guru->id)->count();
-        if ($countJadwal >= 1) {
-            $jadwal = Jadwal::withTrashed()->where('guru_id', $guru->id)->forceDelete();
-        } else {
-        }
-        $countUser = User::withTrashed()->where('id_card', $guru->id_card)->count();
-        if ($countUser >= 1) {
-            $user = User::withTrashed()->where('id_card', $guru->id_card)->forceDelete();
-        } else {
-        }
-        $guru->forceDelete();
-        return redirect()->back()->with('success', 'Data guru berhasil dihapus secara permanent');
     }
 
     public function ubah_foto($id)
@@ -244,12 +174,13 @@ class GuruController extends Controller
         return redirect()->route('guru.index')->with('success', 'Berhasil merubah foto!');
     }
 
-    public function mapel($id)
+    public function kelas($id)
     {
         $id = Crypt::decrypt($id);
-        $mapel = Mapel::findorfail($id);
-        $guru = Guru::where('mapel_id', $id)->orderBy('kode', 'asc')->get();
-        return view('admin.guru.show', compact('mapel', 'guru'));
+        $kelas = Kelas::where('id', $id)->get();
+        $id_guru = Kelas::where('guru_id', $id)->value('guru_id');
+        $guru = Guru::where('id', $id_guru)->orderBy('kode', 'asc')->get();
+        return view('admin.guru.show', compact('kelas', 'guru'));
     }
 
     public function absen()
@@ -342,23 +273,6 @@ class GuruController extends Controller
         $guru = Guru::findorfail($id);
         $absen = Absen::orderBy('tanggal', 'desc')->where('guru_id', $id)->get();
         return view('admin.guru.kehadiran', compact('guru', 'absen'));
-    }
-
-    public function export_excel()
-    {
-        return Excel::download(new GuruExport, 'guru.xlsx');
-    }
-
-    public function import_excel(Request $request)
-    {
-        $this->validate($request, [
-            'file' => 'required|mimes:csv,xls,xlsx'
-        ]);
-        $file = $request->file('file');
-        $nama_file = rand() . $file->getClientOriginalName();
-        $file->move('file_guru', $nama_file);
-        Excel::import(new GuruImport, public_path('/file_guru/' . $nama_file));
-        return redirect()->back()->with('success', 'Data Guru Berhasil Diimport!');
     }
 
     public function deleteAll()

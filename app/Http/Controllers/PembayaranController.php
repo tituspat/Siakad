@@ -163,20 +163,5 @@ class PembayaranController extends Controller
          return redirect()->back()->with('success', 'Pembayaran berhasil di Edit');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-      //   if(Pembayaran::find($id)->delete()) :
-      //       Alert::success('Berhasil!', 'Pembayaran Berhasil di Hapus!');
-      //    else :
-      //       Alert::success('Terjadi Kesalahan!', 'Pembayaran Gagal di Tambahkan!');
-      //    endif;
-         
-         // return back();
-    }
+
 }
