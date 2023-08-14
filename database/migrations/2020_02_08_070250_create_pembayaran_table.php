@@ -16,12 +16,11 @@ class CreatePembayaranTable extends Migration
         Schema::create('pembayaran', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('id_siswa')->unsigned();
-            $table->string('spp_bulan',20);
-            #$table->date('tgl_bayar');
-            #$table->string('bulan_bayar', 8);
-            #$table->string('tahun_bayar', 4);
-            #$table->bigInteger('id_spp')->unsigned();
-            #$table->foreign('id_spp')->references('id')->on('siswa');
+            $table->string('spp_bulan', 20);
+            $table->date('tgl_bayar');
+            $table->string('bulan_bayar', 8);
+            $table->string('tahun_bayar', 4);
+            $table->bigInteger('id_spp')->unsigned();
             $table->integer('jumlah_bayar');
             $table->timestamps();
         });

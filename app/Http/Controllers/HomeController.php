@@ -8,7 +8,6 @@ use App\Models\Guru;
 use App\Models\Kehadiran;
 use App\Models\Kelas;
 use App\Models\Siswa;
-use App\Models\Mapel;
 use App\Models\User;
 use App\Models\Pengumuman;
 use Illuminate\Http\Request;
@@ -51,7 +50,6 @@ class HomeController extends Controller
         $siswalk = Siswa::where('jk', 'L')->count();
         $siswapr = Siswa::where('jk', 'P')->count();
         $kelas = Kelas::count();
-        $mapel = Mapel::count();
         $user = User::count();
         return view('admin.index', compact(
             'jadwal',
@@ -62,7 +60,6 @@ class HomeController extends Controller
             'siswapr',
             'siswa',
             'kelas',
-            'mapel',
             'user',
         ));
     }

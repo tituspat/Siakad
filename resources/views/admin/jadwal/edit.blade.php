@@ -45,21 +45,6 @@
                   @endforeach
                 </select>
               </div>
-              <div class="form-group">
-                <label for="guru_id">Kode Mapel</label>
-                <select id="guru_id" name="guru_id" class="form-control @error('guru_id') is-invalid @enderror select2bs4">
-                  <option value="" @if ($jadwal->guru_id)
-                    selected
-                  @endif>-- Pilih Kode Mapel --</option>
-                  @foreach ($guru as $data)
-                    <option value="{{ $data->id }}"
-                      @if ($jadwal->guru_id == $data->id)
-                        selected
-                      @endif
-                    >{{ $data->kode }}</option>
-                  @endforeach
-                </select>
-              </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
@@ -69,19 +54,6 @@
               <div class="form-group">
                 <label for="jam_selesai">Jam Selesai</label>
                 <input type='time' value="{{ $jadwal->jam_selesai }}" name='jam_selesai' class="form-control @error('jam_selesai') is-invalid @enderror" placeholder='JJ:mm:dd'>
-              </div>
-              <div class="form-group">
-                <label for="ruang_id">Ruang Kelas</label>
-                <select id="ruang_id" name="ruang_id" class="form-control @error('ruang_id') is-invalid @enderror select2bs4">
-                    <option value="">-- Pilih Ruang Kelas --</option>
-                    @foreach ($ruang as $data)
-                        <option value="{{ $data->id }}"
-                          @if ($jadwal->ruang_id == $data->id)
-                            selected
-                          @endif
-                        >{{ $data->nama_ruang }}</option>
-                    @endforeach
-                </select>
               </div>
             </div>
           </div>

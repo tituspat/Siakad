@@ -17,6 +17,15 @@ class MateriController extends Controller
 
         return view('materi.index', compact('materi', 'kelas'));
     }
+
+    public function show($id)
+    {
+        $id = Crypt::decrypt($id);
+        $materi = Materi::where('kelas_id', $id);
+        $kelas = Kelas::where('id', $id)->first();
+        return view('materi.show', compact('materi', 'kelas'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -84,12 +93,5 @@ class MateriController extends Controller
         // Misalnya, jika URL Google Drive adalah https://drive.google.com/file/d/abc123/view
         $parts = explode('/', parse_url($url, PHP_URL_PATH));
         return $parts[count($parts) - 2];
-    }
-    public function show($id)
-    {
-        $id = Crypt::decrypt($id);
-        $materi = Materi::where('kelas_id', $id)->first();
-        $kelas = Kelas::where('id', $id);
-        return view('materi.show', compact('materi', 'kelas'));
     }
 }

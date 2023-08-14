@@ -17,11 +17,9 @@ class CreateJadwalTable extends Migration
             $table->bigIncrements('id');
             $table->integer('hari_id');
             $table->integer('kelas_id');
-            $table->integer('mapel_id');
             $table->integer('guru_id');
             $table->time('jam_mulai');
             $table->time('jam_selesai');
-            $table->integer('ruang_id');
             $table->timestamps();
             $table->softDeletes();
         });

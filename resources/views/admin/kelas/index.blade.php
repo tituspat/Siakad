@@ -160,9 +160,8 @@
               <thead>
                 <tr>
                   <th>Hari</th>
-                  <th>Jadwal</th>
+                  <th>Guru</th>
                   <th>Jam Pelajaran</th>
-                  <th>Ruang Kelas</th>
                 </tr>
               </thead>
               <tbody id="data-jadwal">
@@ -170,9 +169,8 @@
               <tfoot>
                 <tr>
                   <th>Hari</th>
-                  <th>Jadwal</th>
+                  <th>Guru</th>
                   <th>Jam Pelajaran</th>
-                  <th>Ruang Kelas</th>
                 </tr>
               </tfoot>
             </table>
@@ -275,9 +273,8 @@
               $("#judul-jadwal").text('View Data Jadwal ' + val.kelas);
               jadwal += "<tr>";
                 jadwal += "<td>"+val.hari+"</td>";
-                jadwal += "<td><h5 class='card-title'>"+val.mapel+"</h5><p class='card-text'><small class='text-muted'>"+val.guru+"</small></p></td>";
+                jadwal += "<td>"+val.guru+"</td>";
                 jadwal += "<td>"+val.jam_mulai+" - "+val.jam_selesai+"</td>";
-                jadwal += "<td>"+val.ruang+"</td>";
               jadwal+="</tr>";
             });
             $("#data-jadwal").html(jadwal);

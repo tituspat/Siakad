@@ -37,7 +37,7 @@ class UsersSeeder extends Seeder
             'name' => 'Guru TK',
             'email' => 'guru.tk@gmail.com',
             'password' => Hash::make('12345678'),
-            'id_card' => '000001',
+            'id_card' => '00001',
             'role' => 'Guru',
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')

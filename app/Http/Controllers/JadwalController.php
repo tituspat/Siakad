@@ -27,9 +27,8 @@ class JadwalController extends Controller
     {
         $hari = Hari::all();
         $kelas = Kelas::OrderBy('nama_kelas', 'asc')->get();
-        $ruang = Ruang::all();
         $guru = Guru::OrderBy('kode', 'asc')->get();
-        return view('admin.jadwal.index', compact('hari', 'kelas', 'guru', 'ruang'));
+        return view('admin.jadwal.index', compact('hari', 'kelas', 'guru'));
     }
 
     /**
@@ -53,25 +52,25 @@ class JadwalController extends Controller
         $this->validate($request, [
             'hari_id' => 'required',
             'kelas_id' => 'required',
-            'guru_id' => 'required',
             'jam_mulai' => 'required',
             'jam_selesai' => 'required',
-            'ruang_id' => 'required',
         ]);
 
-        $guru = Guru::findorfail($request->guru_id);
+
+        $kelas = Kelas::find($request->kelas_id);
+        $guru_id = $kelas->guru_id;
+
+        
         Jadwal::updateOrCreate(
             [
                 'id' => $request->jadwal_id
             ],
             [
                 'hari_id' => $request->hari_id,
+                'guru_id' => $guru_id,
                 'kelas_id' => $request->kelas_id,
-                'mapel_id' => $guru->mapel_id,
-                'guru_id' => $request->guru_id,
                 'jam_mulai' => $request->jam_mulai,
                 'jam_selesai' => $request->jam_selesai,
-                'ruang_id' => $request->ruang_id,
             ]
         );
 
@@ -104,9 +103,8 @@ class JadwalController extends Controller
         $jadwal = Jadwal::findorfail($id);
         $hari = Hari::all();
         $kelas = Kelas::all();
-        $ruang = Ruang::all();
         $guru = Guru::OrderBy('kode', 'asc')->get();
-        return view('admin.jadwal.edit', compact('jadwal', 'hari', 'kelas', 'guru', 'ruang'));
+        return view('admin.jadwal.edit', compact('jadwal', 'hari', 'kelas', 'guru'));
     }
 
     /**
@@ -128,12 +126,10 @@ class JadwalController extends Controller
         foreach ($jadwal as $val) {
             $newForm[] = array(
                 'hari' => $val->hari->nama_hari,
-                'mapel' => $val->mapel->nama_mapel,
                 'kelas' => $val->kelas->nama_kelas,
                 'guru' => $val->guru->nama_guru,
                 'jam_mulai' => $val->jam_mulai,
                 'jam_selesai' => $val->jam_selesai,
-                'ruang' => $val->ruang->nama_ruang,
             );
         }
         return response()->json($newForm);
@@ -144,12 +140,10 @@ class JadwalController extends Controller
         $jadwal = Jadwal::OrderBy('jam_mulai')->OrderBy('jam_selesai')->OrderBy('kelas_id')->where('hari_id', $request->hari)->where('jam_mulai', '<=', $request->jam)->where('jam_selesai', '>=', $request->jam)->get();
         foreach ($jadwal as $val) {
             $newForm[] = array(
-                'mapel' => $val->mapel->nama_mapel,
                 'kelas' => $val->kelas->nama_kelas,
                 'guru' => $val->guru->nama_guru,
                 'jam_mulai' => $val->jam_mulai,
                 'jam_selesai' => $val->jam_selesai,
-                'ruang' => $val->ruang->nama_ruang,
                 'ket' => $val->absen($val->guru_id),
             );
         }

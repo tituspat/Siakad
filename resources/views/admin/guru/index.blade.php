@@ -16,41 +16,6 @@
                 </button>
             </h3>
         </div>
-        <div class="modal fade" id="importExcel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<form method="post" action="{{ route('guru.import_excel') }}" enctype="multipart/form-data">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">Import Excel</h5>
-						</div>
-						<div class="modal-body">
-							@csrf
-                            <div class="card card-outline card-primary">
-                                <div class="card-header">
-                                    <h5 class="modal-title">Petunjuk :</h5>
-                                </div>
-                                <div class="card-body">
-                                    <ul>
-                                        <li>rows 1 = nama guru</li>
-                                        <li>rows 2 = nip guru</li>
-                                        <li>rows 3 = jenis kelamin</li>
-                                        <li>rows 4 = mata pelajaran</li>
-                                    </ul>
-                                </div>
-                            </div>
-							<label>Pilih file excel</label>
-							<div class="form-group">
-								<input type="file" name="file" required="required">
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-							<button type="submit" class="btn btn-primary">Import</button>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
         <div class="modal fade" id="dropTable" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<form method="post" action="{{ route('guru.deleteAll') }}">

@@ -67,8 +67,7 @@ Route::get('/clear-cache', function () {
     Route::get('/pengaturan/password', [UserController::class, 'edit_password'])->name('pengaturan.password');
     Route::post('/pengaturan/ubah-password', [UserController::class, 'ubah_password'])->name('pengaturan.ubah-password');
 
-    Route::get('/data-spp', [SppController::class, 'index'])->name('data-spp');
-    Route::post('/data-spp', [SppController::class, 'store'])->name('data-spp.store');
+    Route::resource('/data-spp', SppController::class);
     Route::get('/spp/histori', [HistoryController::class, 'index'])->name('spp.history');
     Route::resource('/spp/pembayaran', PembayaranController::class);
 
@@ -85,9 +84,11 @@ Route::get('/clear-cache', function () {
     });
   // Guru
     Route::middleware(['guru'])->group(function () {
-      Route::get('/absen/harian', [GuruController::class, 'absen'])->name('absen.harian');
-      Route::post('/absen/simpan', [GuruController::class, 'simpan'])->name('absen.simpan');
+      Route::get('/absen/harian', [SiswaController::class, 'absen'])->name('absen.harian');
+      Route::post('/absen/simpan', [SiswaController::class, 'simpan'])->name('absen.simpan');
       Route::get('/jadwal/guru', [JadwalController::class, 'guru'])->name('jadwal.guru');
+      Route::get('/materi/guru', [GuruController::class, 'materiKelas'])->name('materi.kelas.guru');
+      Route::get('/materi/Ajar/guru', [GuruController::class, 'materiAjar'])->name('materi.ajar.guru');
       Route::resource('/nilai', NilaiController::class);
       Route::resource('/ulangan', UlanganController::class);
       Route::resource('/sikap', SikapController::class);
@@ -105,8 +106,8 @@ Route::get('/clear-cache', function () {
       Route::get('/admin/home', [HomeController::class, 'admin'])->name('admin.home');
       Route::get('/admin/pengumuman', [PengumumanController::class, 'index'])->name('admin.pengumuman');
       Route::post('/admin/pengumuman/simpan', [PengumumanController::class, 'simpan'])->name('admin.pengumuman.simpan');
-      Route::get('/guru/absensi', [GuruController::class, 'absensi'])->name('guru.absensi');
-      Route::get('/guru/kehadiran/{id}', [GuruController::class, 'kehadiran'])->name('guru.kehadiran');
+      Route::get('/siswa/absensi', [SiswaController::class, 'absensi'])->name('siswa.absensi');
+      Route::get('/siswa/kehadiran/{id}', [SiswaController::class, 'kehadiran'])->name('siswa.kehadiran');
       Route::get('/absen/json', [GuruController::class, 'json']);
       Route::get('/guru/kelas/{id}', [GuruController::class, 'kelas'])->name('guru.kelas');
       Route::get('/guru/ubah-foto/{id}', [GuruController::class, 'ubah_foto'])->name('guru.ubah-foto');

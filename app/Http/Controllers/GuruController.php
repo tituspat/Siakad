@@ -95,9 +95,11 @@ class GuruController extends Controller
      */
     public function show($id)
     {
+
         $id = Crypt::decrypt($id);
-        $guru = Guru::findorfail($id);
-        return view('admin.guru.details', compact('guru'));
+        $guru = Guru::findOrFail($id);
+        $kelas = Kelas::all();
+        return view('admin.guru.details', compact('guru', 'kelas'));
     }
 
     /**
@@ -110,8 +112,7 @@ class GuruController extends Controller
     {
         $id = Crypt::decrypt($id);
         $guru = Guru::findorfail($id);
-        $mapel = Mapel::all();
-        return view('admin.guru.edit', compact('guru', 'mapel'));
+        return view('admin.guru.edit', compact('guru'));
     }
 
     /**
@@ -183,98 +184,6 @@ class GuruController extends Controller
         return view('admin.guru.show', compact('kelas', 'guru'));
     }
 
-    public function absen()
-    {
-        $absen = Absen::where('tanggal', date('Y-m-d'))->get();
-        $kehadiran = Kehadiran::limit(4)->get();
-        return view('guru.absen', compact('absen', 'kehadiran'));
-    }
-
-    public function simpan(Request $request)
-    {
-        $this->validate($request, [
-            'id_card' => 'required',
-            'kehadiran_id' => 'required'
-        ]);
-        $cekGuru = Guru::where('id_card', $request->id_card)->count();
-        if ($cekGuru >= 1) {
-            $guru = Guru::where('id_card', $request->id_card)->first();
-            if ($guru->id_card == Auth::user()->id_card) {
-                $cekAbsen = Absen::where('guru_id', $guru->id)->where('tanggal', date('Y-m-d'))->count();
-                if ($cekAbsen == 0) {
-                    if (date('w') != '0' && date('w') != '6') {
-                        if (date('H:i:s') >= '06:00:00') {
-                            if (date('H:i:s') >= '09:00:00') {
-                                if (date('H:i:s') >= '16:15:00') {
-                                    Absen::create([
-                                        'tanggal' => date('Y-m-d'),
-                                        'guru_id' => $guru->id,
-                                        'kehadiran_id' => '6',
-                                    ]);
-                                    return redirect()->back()->with('info', 'Maaf sekarang sudah waktunya pulang!');
-                                } else {
-                                    if ($request->kehadiran_id == '1') {
-                                        $terlambat = date('H') - 9 . ' Jam ' . date('i') . ' Menit';
-                                        if (date('H') - 9 == 0) {
-                                            $terlambat = date('i') . ' Menit';
-                                        }
-                                        Absen::create([
-                                            'tanggal' => date('Y-m-d'),
-                                            'guru_id' => $guru->id,
-                                            'kehadiran_id' => '5',
-                                        ]);
-                                        return redirect()->back()->with('warning', 'Maaf anda terlambat ' . $terlambat . '!');
-                                    } else {
-                                        Absen::create([
-                                            'tanggal' => date('Y-m-d'),
-                                            'guru_id' => $guru->id,
-                                            'kehadiran_id' => $request->kehadiran_id,
-                                        ]);
-                                        return redirect()->back()->with('success', 'Anda hari ini berhasil absen!');
-                                    }
-                                }
-                            } else {
-                                Absen::create([
-                                    'tanggal' => date('Y-m-d'),
-                                    'guru_id' => $guru->id,
-                                    'kehadiran_id' => $request->kehadiran_id,
-                                ]);
-                                return redirect()->back()->with('success', 'Anda hari ini berhasil absen tepat waktu!');
-                            }
-                        } else {
-                            return redirect()->back()->with('info', 'Maaf absensi di mulai jam 6 pagi!');
-                        }
-                    } else {
-                        $namaHari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu"];
-                        $d = date('w');
-                        $hari = $namaHari[$d];
-                        return redirect()->back()->with('info', 'Maaf sekolah hari ' . $hari . ' libur!');
-                    }
-                } else {
-                    return redirect()->back()->with('warning', 'Maaf absensi tidak bisa dilakukan 2x!');
-                }
-            } else {
-                return redirect()->back()->with('error', 'Maaf id card ini bukan milik anda!');
-            }
-        } else {
-            return redirect()->back()->with('error', 'Maaf id card ini tidak terdaftar!');
-        }
-    }
-
-    public function absensi()
-    {
-        $guru = Guru::all();
-        return view('admin.guru.absen', compact('guru'));
-    }
-
-    public function kehadiran($id)
-    {
-        $id = Crypt::decrypt($id);
-        $guru = Guru::findorfail($id);
-        $absen = Absen::orderBy('tanggal', 'desc')->where('guru_id', $id)->get();
-        return view('admin.guru.kehadiran', compact('guru', 'absen'));
-    }
-
     public function deleteAll()
     {
         $guru = Guru::all();
@@ -285,5 +194,21 @@ class GuruController extends Controller
         } else {
             return redirect()->back()->with('warning', 'Data table guru kosong!');
         }
+    }
+
+    public function materiKelas()
+    {
+        $materi = Materi::orderBy('created_at', 'asc')->get();
+        $kelas = Kelas::where('guru_id', Auth::user()->id)->first();
+    
+        return view('materi.index', compact('materi', 'kelas'));
+    }
+    
+    public function materiAjar($id)
+    {
+        $id = Crypt::decrypt($id);
+        $materi = Materi::where('kelas_id', $id)->get();
+        $kelas = Kelas::where('id', $id)->first();
+        return view('materi.show', compact('materi', 'kelas'));
     }
 }

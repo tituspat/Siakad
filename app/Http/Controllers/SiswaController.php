@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\Spp;
+use App\Models\Absen;
+use App\Models\Kehadiran;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
@@ -206,6 +208,59 @@ class SiswaController extends Controller
         $siswa = Siswa::where('kelas_id', $id)->OrderBy('nama_siswa', 'asc')->get();
         $kelas = Kelas::findorfail($id);
         return view('admin.siswa.show', compact('siswa', 'kelas'));
+    }
+
+    public function absen()
+    {
+        $siswa = Siswa::all();
+        $absen = Absen::where('tanggal', date('Y-m-d'))->get();
+        $kehadiran = Kehadiran::limit(4)->get();
+        return view('guru.siswa.absen', compact('absen', 'kehadiran', 'siswa'));
+    }
+
+    public function simpan(Request $request)
+    {
+        $this->validate($request, [
+            'no_induk' => 'required',
+            'kehadiran_id' => 'required'
+        ]);
+            $siswa = Siswa::where('no_induk', $request->no_induk)->first();
+            if ($siswa->no_induk == $request->no_induk) {
+                $cekAbsen = Absen::where('siswa_id', $siswa->id)->where('tanggal', date('Y-m-d'))->count();
+                if ($cekAbsen == 0) {
+                    if (date('w') != '0' && date('w') != '6') {
+                        Absen::create([
+                            'tanggal' => date('Y-m-d'),
+                            'siswa_id' => $siswa->id,
+                            'kehadiran_id' => $request->kehadiran_id,
+                        ]);
+                        return redirect()->back()->with('success', 'Absensi behasil!');
+                    } else {
+                        $namaHari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu"];
+                        $d = date('w');
+                        $hari = $namaHari[$d];
+                        return redirect()->back()->with('info', 'Maaf Bimble hari ' . $hari . ' libur!');
+                    }
+                } else {
+                    return redirect()->back()->with('warning', 'Maaf absensi tidak bisa dilakukan 2x!');
+                }
+            } else {
+                return redirect()->back()->with('error', 'Maaf id card ini bukan milik anda!');
+            }
+    }
+    
+    public function absensi()
+    {
+        $siswa = Siswa::all();
+        return view('admin.siswa.absen', compact('siswa'));
+    }
+
+    public function kehadiran($id)
+    {
+        $id = Crypt::decrypt($id);
+        $siswa = Siswa::findorfail($id);
+        $absen = Absen::orderBy('tanggal', 'desc')->where('siswa_id', $id)->get();
+        return view('admin.siswa.kehadiran', compact('siswa', 'absen'));
     }
 
     public function deleteAll()

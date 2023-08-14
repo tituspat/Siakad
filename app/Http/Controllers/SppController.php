@@ -23,7 +23,7 @@ class SppController extends Controller
             'user' => Siswa::find(auth()->user()->id)
         ];
       
-         return view('data-spp.index', $data);
+         return view('admin.spp.index', $data);
     }
 
     /**
@@ -64,7 +64,7 @@ class SppController extends Controller
            ]);
          endif;
       
-      return redirect()->back()->with('success', 'Berhasil Menambvahkan data');
+      return redirect()->back()->with('success', 'Berhasil Menambahkan data');
     }
 
     /**

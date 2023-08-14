@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Absen extends Model
 {
-    protected $fillable = ['guru_id', 'tanggal', 'kehadiran_id'];
+    protected $fillable = ['siswa_id', 'tanggal', 'kehadiran_id'];
 
-    public function guru()
+    public function siswa()
     {
-        return $this->belongsTo('App\Models\Guru')->withDefault();
+        return $this->belongsTo('App\Models\Siswa')->withDefault();
     }
 
     public function kehadiran()
@@ -18,5 +18,5 @@ class Absen extends Model
         return $this->belongsTo('App\Models\Kehadiran')->withDefault();
     }
 
-    protected $table = 'absensi_guru';
+    protected $table = 'absensi_siswa';
 }

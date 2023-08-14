@@ -16,87 +16,49 @@
               </button>
           </h3>
       </div>
-      <div class="modal fade" id="importExcel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="dropTable" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-          <form method="post" action="{{ route('jadwal.import_excel') }}" enctype="multipart/form-data">
+          <form method="post" action="{{ route('jadwal.deleteAll') }}">
+            @csrf
+            @method('delete')
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Import Excel</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Sure you drop all data?</h5>
               </div>
-              <div class="modal-body">
-                @csrf
-                  <div class="card card-outline card-primary">
-                      <div class="card-header">
-                          <h5 class="modal-title">Petunjuk :</h5>
-                      </div>
-                      <div class="card-body">
-                          <ul>
-                              <li>rows 1 = nama hari</li>
-                              <li>rows 2 = nama kelas</li>
-                              <li>rows 3 = nama mapel</li>
-                              <li>rows 4 = nama guru</li>
-                              <li>rows 5 = jam mulai</li>
-                              <li>rows 6 = jam selesai</li>
-                              <li>rows 7 = nama ruang</li>
-                          </ul>
-                      </div>
-                  </div>
-                  <label>Pilih file excel</label>
-                  <div class="form-group">
-                    <input type="file" name="file" required="required">
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary">Import</button>
-                </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cencel</button>
+                <button type="submit" class="btn btn-danger">Drop</button>
               </div>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
-        <div class="modal fade" id="dropTable" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <form method="post" action="{{ route('jadwal.deleteAll') }}">
-              @csrf
-              @method('delete')
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Sure you drop all data?</h5>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cencel</button>
-                  <button type="submit" class="btn btn-danger">Drop</button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-        <!-- /.card-header -->
-        <div class="card-body">
-          <table id="example1" class="table table-bordered table-striped table-hover">
-            <thead>
+      </div>
+      <!-- /.card-header -->
+      <div class="card-body">
+        <table id="example1" class="table table-bordered table-striped table-hover">
+          <thead>
+              <tr>
+                  <th>No.</th>
+                  <th>Nama Kelas</th>
+                  <th>Lihat Jadwal</th>
+              </tr>
+          </thead>
+          <tbody>
+              @foreach ($kelas as $data)
                 <tr>
-                    <th>No.</th>
-                    <th>Nama Kelas</th>
-                    <th>Lihat Jadwal</th>
+                  <td>{{ $loop->iteration }}</td>
+                  <td>{{ $data->nama_kelas }}</td>
+                  <td>
+                    <a href="{{ route('jadwal.show', Crypt::encrypt($data->id)) }}" class="btn btn-info btn-sm"><i class="nav-icon fas fa-search-plus"></i> &nbsp; Details</a>
+                  </td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach ($kelas as $data)
-                  <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $data->nama_kelas }}</td>
-                    <td>
-                      <a href="{{ route('jadwal.show', Crypt::encrypt($data->id)) }}" class="btn btn-info btn-sm"><i class="nav-icon fas fa-search-plus"></i> &nbsp; Details</a>
-                    </td>
-                  </tr>
-                @endforeach
-            </tbody>
-          </table>
-        </div>
-        <!-- /.card-body -->
-    </div>
-    <!-- /.card -->
+              @endforeach
+          </tbody>
+        </table>
+      </div>
+      <!-- /.card-body -->
+  </div>
+  <!-- /.card -->
 </div>
 <!-- /.col -->
 
@@ -133,15 +95,6 @@
                       @endforeach
                   </select>
                 </div>
-                <div class="form-group">
-                  <label for="guru_id">Kode Mapel</label>
-                  <select id="guru_id" name="guru_id" class="form-control @error('guru_id') is-invalid @enderror select2bs4">
-                      <option value="">-- Pilih Kode Mapel --</option>
-                      @foreach ($guru as $data)
-                          <option value="{{ $data->id }}">{{ $data->kode }}</option>
-                      @endforeach
-                  </select>
-                </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
@@ -152,15 +105,7 @@
                   <label for="jam_selesai">Jam Selesai</label>
                   <input type='text' id="jam_selesai" name='jam_selesai' class="form-control @error('jam_selesai') is-invalid @enderror" placeholder="{{ Date('H:i') }}">
                 </div>
-                <div class="form-group">
-                  <label for="ruang_id">Ruang Kelas</label>
-                  <select id="ruang_id" name="ruang_id" class="form-control @error('ruang_id') is-invalid @enderror select2bs4">
-                      <option value="">-- Pilih Ruang Kelas --</option>
-                      @foreach ($ruang as $data)
-                          <option value="{{ $data->id }}">{{ $data->nama_ruang }}</option>
-                      @endforeach
-                  </select>
-                </div>
+ 
               </div>
             </div>
           </div>

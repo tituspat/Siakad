@@ -1,10 +1,10 @@
 @extends('template_backend.home')
 @section('heading')
-  Data Guru {{ $kelas->nama_kelas }}
+  Data Guru Kelas
 @endsection
 @section('page')
   <li class="breadcrumb-item active"><a href="{{ route('guru.index') }}">Guru</a></li>
-  <li class="breadcrumb-item active">{{ $kelas->nama_kelas }}</li>
+  <li class="breadcrumb-item active"></li>
 @endsection
 @section('content')
 <div class="col-md-12">

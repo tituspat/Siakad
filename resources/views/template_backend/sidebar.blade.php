@@ -70,13 +70,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('mapel.index') }}" class="nav-link" id="DataMapel">
-                                    <i class="fas fa-book nav-icon"></i>
-                                    <p>Data Mapel</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('siswa.index') }}" class="nav-link" id="DataSiswa">
+                                <a href="{{ route('siswa.index') }}" class="nav-link" id="LaporanKeuangan">
                                     <i class="	fas fa-coins nav-icon"></i>
                                     <p>Laporan Keuangan</p>
                                 </a>
@@ -88,7 +82,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('data-spp') }}" class="nav-link" id="AbsensiGuru">
+                                <a href="{{ route('data-spp.index') }}" class="nav-link" id="DataSpp">
                                     <i class="fas fa-dollar-sign nav-icon"></i>
                                     <p>Data Spp</p>
                                 </a>
@@ -97,13 +91,13 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('guru.absensi') }}" class="nav-link" id="AbsensiGuru">
+                        <a href="{{ route('siswa.absensi') }}" class="nav-link" id="SiswaGuru">
                             <i class="fas fa-calendar-check nav-icon"></i>
                             <p>Absensi Siswa</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('spp.history') }}" class="nav-link" id="AbsensiGuru">
+                        <a href="{{ route('spp.history') }}" class="nav-link" id="HistoryPembayaran">
                             <i class="fas fa-dollar-sign nav-icon"></i>
                             <p>History Pembayaran SPP</p>
                         </a>
@@ -115,9 +109,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('materi.index') }}" class="nav-link" id="Pengumuman">
+                        <a href="{{ route('materi.index') }}" class="nav-link" id="ELearning">
                             <i class="nav-icon fas fa-clipboard"></i>
-                            <p>Belajar Mandiri</p>
+                            <p>E - Learning</p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -162,18 +156,6 @@
                                     <p>Entry Nilai Ulangan</p>
                                 </a>
                             </li>
-                            @if (
-                                Auth::user()->guru(Auth::user()->id_card)->mapel->nama_mapel == "Pendidikan Agama dan Budi Pekerti" ||
-                                Auth::user()->guru(Auth::user()->id_card)->mapel->nama_mapel == "Pendidikan Pancasila dan Kewarganegaraan"
-                            )
-                                <li class="nav-item">
-                                    <a href="{{ route('sikap.index') }}" class="nav-link" id="SikapGuru">
-                                        <i class="fas fa-file-alt nav-icon"></i>
-                                        <p>Entry Nilai Sikap</p>
-                                    </a>
-                                </li>
-                            @else
-                            @endif
                             <li class="nav-item">
                                 <a href="{{ route('rapot.index') }}" class="nav-link" id="RapotGuru">
                                     <i class="fas fa-file-alt nav-icon"></i>
@@ -187,6 +169,12 @@
                                 </a>
                             </li>
                         </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('materi.kelas.guru') }}" class="nav-link" id="MateriGuru">
+                            <i class="fas fa-calendar-alt nav-icon"></i>
+                            <p>Materi Kelas</p>
+                        </a>
                     </li>
 
                     <!-- Siswa -->

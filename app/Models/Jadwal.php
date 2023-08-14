@@ -10,7 +10,7 @@ class Jadwal extends Model
 {
   use SoftDeletes;
 
-  protected $fillable = ['hari_id', 'kelas_id', 'mapel_id', 'guru_id', 'jam_mulai', 'jam_selesai', 'ruang_id'];
+  protected $fillable = ['hari_id', 'kelas_id', 'guru_id', 'jam_mulai', 'jam_selesai'];
 
   public function hari()
   {
@@ -22,19 +22,9 @@ class Jadwal extends Model
     return $this->belongsTo('App\Models\Kelas')->withDefault();
   }
 
-  public function mapel()
-  {
-    return $this->belongsTo('App\Models\Mapel')->withDefault();
-  }
-
   public function guru()
   {
     return $this->belongsTo('App\Models\Guru')->withDefault();
-  }
-
-  public function ruang()
-  {
-    return $this->belongsTo('App\Models\Ruang')->withDefault();
   }
 
   public function rapot($id)

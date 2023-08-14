@@ -48,7 +48,6 @@
                            <th scope="col">#</th>
                            <th scope="col">TAHUN</th>
 							      <th scope="col">NOMINAL</th>
-                           <th scope="col">DIBUAT</th>
 					   	      <th scope="col"></th>                                        
                         </tr>
                      </thead>
@@ -61,7 +60,6 @@
                            <th scope="row">{{ $i }}</th>
                            <td>{{ $value->tahun }}</td>
 							      <td>{{ $value->nominal }}</td>
-                           <td>{{ $value->created_at->format('d M, Y') }}</td>
                            <td>										                           
                             	<div class="hide-menu">
                                  <a href="javascript:void(0)" class="text-dark" id="actiondd" role="button" data-toggle="dropdown">
@@ -114,8 +112,13 @@
 
 @endsection
 
-@section('sweet')
+@section('script')
 
+   <script>
+        $("#MasterData").addClass("active");
+        $("#liMasterData").addClass("menu-open");
+        $("#DataSpp").addClass("active");
+    
    function deleteData(id){
       Swal.fire({
                title: 'PERINGATAN!',
@@ -132,5 +135,5 @@
                   }
                })
    }
-   
+   </script>
 @endsection

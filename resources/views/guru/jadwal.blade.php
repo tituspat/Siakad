@@ -16,7 +16,6 @@
                     <th>Hari</th>
                     <th>Kelas</th>
                     <th>Jam Mengajar</th>
-                    <th>Ruang Kelas</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,7 +24,6 @@
                     <td>{{ $data->hari->nama_hari }}</td>
                     <td>{{ $data->kelas->nama_kelas }}</td>
                     <td>{{ $data->jam_mulai }} - {{ $data->jam_selesai }}</td>
-                    <td>{{ $data->ruang->nama_ruang }}</td>
                 </tr>
                 @endforeach
             </tbody>
