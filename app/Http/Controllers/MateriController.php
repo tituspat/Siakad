@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Materi;
 use App\Models\Kelas;
+use App\Models\Siswa;
+use App\Models\Guru;
+use Auth;
+
 
 use Illuminate\Support\Facades\Crypt;
 class MateriController extends Controller
@@ -15,7 +19,7 @@ class MateriController extends Controller
         $materi = Materi::OrderBy('created_at', 'asc')->get();
         $kelas = Kelas::orderBy('nama_kelas')->get();
 
-        return view('materi.index', compact('materi', 'kelas'));
+        return view('admin.materi.index', compact('materi', 'kelas'));
     }
 
     public function show($id)
@@ -23,7 +27,21 @@ class MateriController extends Controller
         $id = Crypt::decrypt($id);
         $materi = Materi::where('kelas_id', $id);
         $kelas = Kelas::where('id', $id)->first();
-        return view('materi.show', compact('materi', 'kelas'));
+        return view('admin.materi.show', compact('materi', 'kelas'));
+    }
+    public function siswa()
+    {
+        $user = Auth::user(); // Mengambil data user yang sedang login
+    
+        if ($user) {
+            $siswa = Siswa::where('no_induk', $user->no_induk)->value('kelas_id');
+            $materi = Materi::where('kelas_id', $siswa)->get();
+            $kelas = Kelas::where('id', $siswa)->first();
+            return view('siswa.materi.show', compact('materi', 'kelas'));
+        } else {
+            // Tindakan yang akan diambil jika user tidak ditemukan (belum login)
+            return redirect()->back()->with('error', 'Anda belum login atau data tidak ditemukan.');
+        }
     }
 
     public function store(Request $request)

@@ -9,7 +9,6 @@ use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\NilaiController;
-use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\RapotController;
 use App\Http\Controllers\SikapController;
 use App\Http\Controllers\SiswaController;
@@ -20,6 +19,7 @@ use App\Http\Controllers\SppController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\MateriController;
+use App\Http\Controllers\TagihanController;
 
 
 
@@ -80,15 +80,17 @@ Route::get('/clear-cache', function () {
       Route::get('/ulangan/siswa', [UlanganController::class, 'siswa'])->name('ulangan.siswa');
       Route::get('/sikap/siswa', [SikapController::class, 'siswa'])->name('sikap.siswa');
       Route::get('/rapot/siswa', [RapotController::class, 'siswa'])->name('rapot.siswa');
-      Route::get('/spp/siswa', [SppController::class, 'siswa'])->name('spp.siswa');
+      Route::get('/spp/siswa', [TagihanController::class, 'siswa'])->name('spp.siswa');
+      Route::get('/siswa/materi', [MateriController::class, 'siswa'])->name('materi.siswa');
+
     });
   // Guru
     Route::middleware(['guru'])->group(function () {
       Route::get('/absen/harian', [SiswaController::class, 'absen'])->name('absen.harian');
       Route::post('/absen/simpan', [SiswaController::class, 'simpan'])->name('absen.simpan');
       Route::get('/jadwal/guru', [JadwalController::class, 'guru'])->name('jadwal.guru');
-      Route::get('/materi/guru', [GuruController::class, 'materiKelas'])->name('materi.kelas.guru');
-      Route::get('/materi/Ajar/guru', [GuruController::class, 'materiAjar'])->name('materi.ajar.guru');
+      Route::get('/guru/materi', [GuruController::class, 'materiKelas'])->name('materi.kelas.guru');
+      Route::get('/guru/materi/ajar', [GuruController::class, 'materiAjar'])->name('materi.ajar.guru');
       Route::resource('/nilai', NilaiController::class);
       Route::resource('/ulangan', UlanganController::class);
       Route::resource('/sikap', SikapController::class);
@@ -104,8 +106,6 @@ Route::get('/clear-cache', function () {
   // Admin
     Route::middleware(['admin'])->group(function () {
       Route::get('/admin/home', [HomeController::class, 'admin'])->name('admin.home');
-      Route::get('/admin/pengumuman', [PengumumanController::class, 'index'])->name('admin.pengumuman');
-      Route::post('/admin/pengumuman/simpan', [PengumumanController::class, 'simpan'])->name('admin.pengumuman.simpan');
       Route::get('/siswa/absensi', [SiswaController::class, 'absensi'])->name('siswa.absensi');
       Route::get('/siswa/kehadiran/{id}', [SiswaController::class, 'kehadiran'])->name('siswa.kehadiran');
       Route::get('/absen/json', [GuruController::class, 'json']);
@@ -146,6 +146,7 @@ Route::get('/clear-cache', function () {
       Route::get('/rapot-siswa/{id}', [RapotController::class, 'edit'])->name('rapot-siswa');
       Route::get('/rapot-show/{id}', [RapotController::class, 'rapot'])->name('rapot-show');
       Route::get('/predikat', [NilaiController::class, 'create'])->name('predikat');
+      Route::resource('/materi', MateriController::class);
       Route::resource('/user', UserController::class);
     });
   });

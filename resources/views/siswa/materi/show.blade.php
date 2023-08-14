@@ -4,7 +4,6 @@ Data Materi {{ $kelas->nama_kelas }}
 @endsection
 
 @section('page')
-<li class="breadcrumb-item active"><a href="{{ route('guru.index') }}">Guru</a></li>
   <li class="breadcrumb-item active">{{ $kelas->nama_kelas }}</li>
 @endsection
 

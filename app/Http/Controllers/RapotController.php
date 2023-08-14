@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Guru;
 use App\Models\Kelas;
-use App\Models\Mapel;
 use App\Models\Nilai;
 use App\Models\Rapot;
-use App\Models\Sikap;
 use App\Models\Siswa;
 use App\Models\Jadwal;
 use Illuminate\Http\Request;
@@ -60,7 +58,6 @@ class RapotController extends Controller
                     'siswa_id' => $request->siswa_id,
                     'kelas_id' => $request->kelas_id,
                     'guru_id' => $request->guru_id,
-                    'mapel_id' => $guru->mapel_id,
                     'k_nilai' => $request->nilai,
                     'k_predikat' => $request->predikat,
                     'k_deskripsi' => $request->deskripsi,
@@ -129,9 +126,7 @@ class RapotController extends Controller
         $id = Crypt::decrypt($id);
         $siswa = Siswa::findorfail($id);
         $kelas = Kelas::findorfail($siswa->kelas_id);
-        $jadwal = Jadwal::orderBy('mapel_id')->where('kelas_id', $kelas->id)->get();
-        $mapel = $jadwal->groupBy('mapel_id');
-        return view('admin.rapot.show', compact('mapel', 'siswa', 'kelas'));
+        return view('admin.rapot.show', compact('siswa', 'kelas'));
     }
 
     public function predikat(Request $request)
@@ -165,17 +160,8 @@ class RapotController extends Controller
     {
         $siswa = Siswa::where('no_induk', Auth::user()->no_induk)->first();
         $kelas = Kelas::findorfail($siswa->kelas_id);
-        $pai = Mapel::where('nama_mapel', 'Pendidikan Agama dan Budi Pekerti')->first();
-        $ppkn = Mapel::where('nama_mapel', 'Pendidikan Pancasila dan Kewarganegaraan')->first();
-        if ($pai != null && $ppkn != null) {
-            $Spai = Sikap::where('siswa_id', $siswa->id)->where('mapel_id', $pai->id)->first();
-            $Sppkn = Sikap::where('siswa_id', $siswa->id)->where('mapel_id', $ppkn->id)->first();
-        } else {
-            $Spai = "";
-            $Sppkn = "";
-        }
-        $jadwal = Jadwal::where('kelas_id', $kelas->id)->orderBy('mapel_id')->get();
-        $mapel = $jadwal->groupBy('mapel_id');
-        return view('siswa.rapot', compact('siswa', 'kelas', 'mapel', 'Spai', 'Sppkn'));
+
+        $jadwal = Jadwal::where('kelas_id', $kelas->id)->get();
+        return view('siswa.rapot', compact('siswa', 'kelas',));
     }
 }

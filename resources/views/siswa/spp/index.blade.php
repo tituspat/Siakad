@@ -8,35 +8,6 @@
 
 	<div class="row">
       <div class="col-md-12">
-        <div class="card card-primary">
-            <div class="card-body">
-               <div class="card-title">{{ __('Tambah SPP') }}</div>               
-                  <form method="post" action="{{ url('/data-spp') }}">
-                     @csrf
-                     
-                     <div class="form-group">
-                        <label>Tahun</label>
-                        <input type="number" class="form-control @error('tahun') is-invalid @enderror" name="tahun" value="{{ old('tahun') }}">
-                        <span class="text-danger">@error('tahun') {{ $message }} @enderror</span>
-                     </div>
-                     
-                     <div class="form-group">
-                        <label>Nominal</label>
-                        <input type="text" class="form-control @error('nominal') is-invalid @enderror" name="nominal" value="{{ old('nominal') }}">
-                        <span class="text-danger">@error('nominal') {{ $message }} @enderror</span>
-                     </div>
-                     
-                     <button type="submit" class="btn btn-success btn-rounded float-right">
-                           <i class="mdi mdi-check"></i> Simpan
-                     </button>
-                  
-                  </form>
-               </div>
-            </div>     
-         </div>   
-	   </div>
-
-      <div class="col-md-12">
 			<div class="card">
 			   <div class="card-body">
 				   <div class="card-title">Data SPP</div>
@@ -56,30 +27,12 @@
 							@php 
 						   	$i=1;
 							@endphp
-							@foreach($spp as $value)
+							@foreach($bills as $bill)
                         <tr>					    
                            <th scope="row">{{ $i }}</th>
-                           <td>{{ $value->tahun }}</td>
-							      <td>{{ $value->nominal }}</td>
-                           <td>{{ $value->created_at->format('d M, Y') }}</td>
-                           <td>										                           
-                            	<div class="hide-menu">
-                                 <a href="javascript:void(0)" class="text-dark" id="actiondd" role="button" data-toggle="dropdown">
-                                    <i class="mdi mdi-dots-vertical"></i>
-                                 </a>
-                                 <div class="dropdown-menu 	fas fa-angle-double-down" aria-labelledby="actiondd">
-                                 	<a class="dropdown-item" href="{{ url('dashboard/data-spp/'.$value->id.'/edit') }}"><i class="ti-pencil"></i> Edit </a>
-								      		<form method="post" action="{{ url('dashboard/data-spp', $value->id) }}" id="delete{{ $value->id }}">
-				   						   	@csrf
-					   						   @method('delete')
-
-      											<button type="button" class="dropdown-item" onclick="deleteData({{ $value->id }})">
-	      											<i class="ti-trash"></i> Hapus
-		   										</button>
-			   								</form>	                    							                                                                            
-                        		   </div>
-                           	</div>								
-							      </td>					
+                           <td>{{ $bill->amount }}</td>
+							      <td>{{ $bill->jatuh_tempo }}</td>
+                           <td>{{ $bill->status }}</td>			
                          </tr>
 							@php
 							$i++;

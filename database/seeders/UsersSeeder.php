@@ -47,7 +47,7 @@ class UsersSeeder extends Seeder
             'name' => 'Siswa TK',
             'email' => 'siswa.tk@gmail.com',
             'password' => Hash::make('12345678'),
-            'no_induk' => '000002',
+            'no_induk' => '000001',
             'role' => 'siswa',
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')

@@ -114,12 +114,6 @@
                             <p>E - Learning</p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="{{ route('admin.pengumuman') }}" class="nav-link" id="Pengumuman">
-                            <i class="nav-icon fas fa-clipboard"></i>
-                            <p>Pengumuman</p>
-                        </a>
-                    </li>
 
                     <!-- Guru  -->
                 @elseif (Auth::user()->role == 'Guru' || Auth::user()->guru(Auth::user()->id_card))
@@ -204,9 +198,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('sikap.siswa') }}" class="nav-link" id="SikapSiswa">
+                        <a href="{{ route('materi.siswa') }}" class="nav-link" id="Elearning">
                             <i class="fas fa-file-alt nav-icon"></i>
-                            <p>Sikap</p>
+                            <p>Materi</p>
                         </a>
                     </li>
                     <li class="nav-item">

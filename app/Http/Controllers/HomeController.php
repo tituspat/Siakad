@@ -9,7 +9,6 @@ use App\Models\Kehadiran;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\User;
-use App\Models\Pengumuman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -35,9 +34,8 @@ class HomeController extends Controller
         $hari = date('w');
         $jam = date('H:i');
         $jadwal = Jadwal::OrderBy('jam_mulai')->OrderBy('jam_selesai')->OrderBy('kelas_id')->where('hari_id', $hari)->where('jam_mulai', '<=', $jam)->where('jam_selesai', '>=', $jam)->get();
-        $pengumuman = Pengumuman::first();
         $kehadiran = Kehadiran::all();
-        return view('home', compact('jadwal', 'pengumuman', 'kehadiran'));
+        return view('home', compact('jadwal','kehadiran'));
     }
 
     public function admin()

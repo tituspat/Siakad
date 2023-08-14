@@ -13,6 +13,17 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
+
+        $schedule->call(function () {
+            $bills = Bill::where('status', 'unpaid')
+                ->where('due_date', '<=', Carbon::now())
+                ->get();
+    
+            foreach ($bills as $bill) {
+                // Update status tagihan menjadi "pending" jika jatuh tempo sudah lewat
+                $bill->update(['status' => 'pending']);
+            }
+        })->monthly();
     }
 
     /**

@@ -10,6 +10,7 @@ use App\models\Guru;
 use App\models\Kelas;
 use App\models\Jadwal;
 use App\models\Absen;
+use App\models\Materi;
 use App\models\Kehadiran;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
@@ -199,9 +200,9 @@ class GuruController extends Controller
     public function materiKelas()
     {
         $materi = Materi::orderBy('created_at', 'asc')->get();
-        $kelas = Kelas::where('guru_id', Auth::user()->id)->first();
+        $kelas = Kelas::where('guru_id', Auth::user()->id)->get();
     
-        return view('materi.index', compact('materi', 'kelas'));
+        return view('guru.materi.index', compact('materi', 'kelas'));
     }
     
     public function materiAjar($id)
@@ -209,6 +210,6 @@ class GuruController extends Controller
         $id = Crypt::decrypt($id);
         $materi = Materi::where('kelas_id', $id)->get();
         $kelas = Kelas::where('id', $id)->first();
-        return view('materi.show', compact('materi', 'kelas'));
+        return view('guru.materi.show', compact('materi', 'kelas'));
     }
 }
