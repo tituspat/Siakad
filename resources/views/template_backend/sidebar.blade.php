@@ -70,9 +70,9 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('siswa.index') }}" class="nav-link" id="LaporanKeuangan">
+                                <a href="{{ route('tagihan.siswa') }}" class="nav-link" id="sppbulanansiswa">
                                     <i class="	fas fa-coins nav-icon"></i>
-                                    <p>Laporan Keuangan</p>
+                                    <p>Spp Bulanan Siswa</p>
                                 </a>
                             </li>
                             <li class="nav-item">

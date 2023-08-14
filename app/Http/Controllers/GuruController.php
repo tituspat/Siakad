@@ -199,8 +199,9 @@ class GuruController extends Controller
 
     public function materiKelas()
     {
+        $dataGuru = Guru::where('id_card', Auth::user()->id_card)->value('id');
         $materi = Materi::orderBy('created_at', 'asc')->get();
-        $kelas = Kelas::where('guru_id', Auth::user()->id)->get();
+        $kelas = Kelas::where('guru_id', $dataGuru)->get();
     
         return view('guru.materi.index', compact('materi', 'kelas'));
     }
@@ -212,4 +213,5 @@ class GuruController extends Controller
         $kelas = Kelas::where('id', $id)->first();
         return view('guru.materi.show', compact('materi', 'kelas'));
     }
+
 }

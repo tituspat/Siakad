@@ -41,25 +41,6 @@
                      </tbody>
                   </table>
                </div>
-					<!-- Pagination -->
-					@if($spp->lastPage() != 1)
-					<div class="btn-group float-right">		
-					   <a href="{{ $app->previousPageUrl() }}" class="btn btn-success">
-							<i class="mdi mdi-chevron-left"></i>
-					   </a>
-					   @for($i = 1; $i <= $spp->lastPage(); $i++)
-						<a class="btn btn-success {{ $i == $spp->currentPage() ? 'active' : '' }}" href="{{ $spp->url($i) }}">{{ $i }}</a>
-					   @endfor
-					   <a href="{{ $spp->nextPageUrl() }}" class="btn btn-success">
-							<i class="mdi mdi-chevron-right"></i>
-				   	</a>
-					</div>
-					@endif
-					<!-- End Pagination -->
-				
-					@if(count($spp) == 0)
-				  		<div class="text-center">Tidak ada data!</div>
-					@endif
 				</div>
 			</div>
 		</div>

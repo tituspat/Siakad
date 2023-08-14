@@ -28,6 +28,13 @@ class SiswaController extends Controller
         return view('admin.siswa.index', compact('kelas', 'SPP'));
     }
 
+    public function tagihan()
+    {
+        $siswa = Siswa::OrderBy('id', 'asc')->get();
+        $spp = spp::first();
+        return view('admin.siswa.tagihan', compact('siswa', 'spp'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -69,7 +76,6 @@ class SiswaController extends Controller
 
         Siswa::create([
             'no_induk' => $request->no_induk,
-            'nis' => $request->nis,
             'nama_siswa' => $request->nama_siswa,
             'jk' => $request->jk,
             'kelas_id' => $request->kelas_id,

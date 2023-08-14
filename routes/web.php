@@ -90,7 +90,7 @@ Route::get('/clear-cache', function () {
       Route::post('/absen/simpan', [SiswaController::class, 'simpan'])->name('absen.simpan');
       Route::get('/jadwal/guru', [JadwalController::class, 'guru'])->name('jadwal.guru');
       Route::get('/guru/materi', [GuruController::class, 'materiKelas'])->name('materi.kelas.guru');
-      Route::get('/guru/materi/ajar', [GuruController::class, 'materiAjar'])->name('materi.ajar.guru');
+      Route::get('/guru/materi/ajar/{id}', [GuruController::class, 'materiAjar'])->name('materi.ajar.guru');
       Route::resource('/nilai', NilaiController::class);
       Route::resource('/ulangan', UlanganController::class);
       Route::resource('/sikap', SikapController::class);
@@ -127,6 +127,7 @@ Route::get('/clear-cache', function () {
       Route::get('/siswa/export_excel', [SiswaController::class, 'export_excel'])->name('siswa.export_excel');
       Route::post('/siswa/import_excel', [SiswaController::class, 'import_excel'])->name('siswa.import_excel');
       Route::delete('/siswa/deleteAll', [SiswaController::class, 'deleteAll'])->name('siswa.deleteAll');
+      Route::get('/tagihan/siswa', [SiswaController::class, 'tagihan'])->name('tagihan.siswa');
       Route::resource('/siswa', SiswaController::class);
       Route::get('/mapel/getMapelJson', [MapelController::class, 'getMapelJson']);
       Route::resource('/mapel', MapelController::class);

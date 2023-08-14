@@ -13,15 +13,14 @@ Data Materi {{ $kelas->nama_kelas }}
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            
-
-            
             <h3 class="card-title">
-                            <a href="{{ route('guru.index') }}" class="btn btn-default btn-sm"><i class="nav-icon fas fa-arrow-left"></i> &nbsp; Kembali</a>
+                <a href="{{ route('guru.index') }}" class="btn btn-default btn-sm"><i class="nav-icon fas fa-arrow-left"></i> &nbsp; Kembali</a>
                 <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target=".bd-example-modal-lg">
                     <i class="nav-icon fas fa-folder-plus"></i> &nbsp; Tambah materi
                 </button>
-                
+                <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target=".bd-example-modal-lg">
+                    <i class="nav-icon fas fa-folder-plus"></i> &nbsp; Buat Soal
+                </button>
             </h3>
         </div>
         <!-- /.card-header -->
