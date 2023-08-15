@@ -103,12 +103,6 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('ulangan-kelas') }}" class="nav-link" id="Ulangan">
-                            <i class="fas fa-file-alt nav-icon"></i>
-                            <p>Nilai Ulangan siswa</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a href="{{ route('materi.index') }}" class="nav-link" id="ELearning">
                             <i class="nav-icon fas fa-clipboard"></i>
                             <p>E - Learning</p>
@@ -143,26 +137,6 @@
                                 <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
-                        <ul class="nav nav-treeview ml-4">
-                            <li class="nav-item">
-                                <a href="{{ route('ulangan.index') }}" class="nav-link" id="UlanganGuru">
-                                    <i class="fas fa-file-alt nav-icon"></i>
-                                    <p>Entry Nilai Ulangan</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('rapot.index') }}" class="nav-link" id="RapotGuru">
-                                    <i class="fas fa-file-alt nav-icon"></i>
-                                    <p>Entry Nilai Rapot</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('nilai.index') }}" class="nav-link" id="DesGuru">
-                                    <i class="fas fa-file-alt nav-icon"></i>
-                                    <p>Deskripsi Predikat</p>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('materi.kelas.guru') }}" class="nav-link" id="MateriGuru">
@@ -189,12 +163,6 @@
                         <a href="{{ route('spp.siswa') }}" class="nav-link" id="SppSiswa">
                             <i class="fas fa-dollar-sign nav-icon"></i>
                             <p>SPP</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('ulangan.siswa') }}" class="nav-link" id="UlanganSiswa">
-                            <i class="fas fa-file-alt nav-icon"></i>
-                            <p>Ulangan</p>
                         </a>
                     </li>
                     <li class="nav-item">

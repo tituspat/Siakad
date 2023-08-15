@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use App\models\Nilai;
+use App\models\test;
 
 class GuruController extends Controller
 {
@@ -211,7 +212,8 @@ class GuruController extends Controller
         $id = Crypt::decrypt($id);
         $materi = Materi::where('kelas_id', $id)->get();
         $kelas = Kelas::where('id', $id)->first();
-        return view('guru.materi.show', compact('materi', 'kelas'));
+        $test = test::where('kelas_id', $id)->first();
+        return view('guru.materi.show', compact('materi', 'kelas', 'test'));
     }
 
 }

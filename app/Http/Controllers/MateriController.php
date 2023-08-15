@@ -8,6 +8,7 @@ use App\Models\Materi;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\Guru;
+use App\Models\test;
 use Auth;
 
 
@@ -27,8 +28,11 @@ class MateriController extends Controller
         $id = Crypt::decrypt($id);
         $materi = Materi::where('kelas_id', $id);
         $kelas = Kelas::where('id', $id)->first();
-        return view('admin.materi.show', compact('materi', 'kelas'));
+
+        $test = test::where('kelas_id', $id)->first();
+        return view('admin.materi.show', compact('materi', 'kelas', 'test'));
     }
+
     public function siswa()
     {
         $user = Auth::user(); // Mengambil data user yang sedang login

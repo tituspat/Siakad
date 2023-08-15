@@ -12,7 +12,6 @@ use App\Http\Controllers\NilaiController;
 use App\Http\Controllers\RapotController;
 use App\Http\Controllers\SikapController;
 use App\Http\Controllers\SiswaController;
-use App\Http\Controllers\UlanganController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\SppController;
@@ -20,6 +19,7 @@ use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\MateriController;
 use App\Http\Controllers\TagihanController;
+use App\Http\Controllers\TestController;
 
 
 
@@ -77,7 +77,6 @@ Route::get('/clear-cache', function () {
   // Siswa
     Route::middleware(['siswa'])->group(function () {
       Route::get('/jadwal/siswa', [JadwalController::class, 'siswa'])->name('jadwal.siswa');
-      Route::get('/ulangan/siswa', [UlanganController::class, 'siswa'])->name('ulangan.siswa');
       Route::get('/sikap/siswa', [SikapController::class, 'siswa'])->name('sikap.siswa');
       Route::get('/rapot/siswa', [RapotController::class, 'siswa'])->name('rapot.siswa');
       Route::get('/spp/siswa', [TagihanController::class, 'siswa'])->name('spp.siswa');
@@ -92,10 +91,12 @@ Route::get('/clear-cache', function () {
       Route::get('/guru/materi', [GuruController::class, 'materiKelas'])->name('materi.kelas.guru');
       Route::get('/guru/materi/ajar/{id}', [GuruController::class, 'materiAjar'])->name('materi.ajar.guru');
       Route::resource('/nilai', NilaiController::class);
-      Route::resource('/ulangan', UlanganController::class);
+      Route::resource('/test', TestController::class);
+      Route::post('/test/selesai/{id}', [TestController::class, 'selesai'])->name('test.selesai');
       Route::resource('/sikap', SikapController::class);
       Route::get('/rapot/predikat', [RapotController::class, 'predikat']);
       Route::resource('/rapot', RapotController::class);
+      Route::resource('/guru/soal', TestController::class);
     });
     // Owner
     Route::middleware(['owner'])->group(function (){
@@ -137,9 +138,6 @@ Route::get('/clear-cache', function () {
       Route::post('/jadwal/import_excel', [JadwalController::class, 'import_excel'])->name('jadwal.import_excel');
       Route::delete('/jadwal/deleteAll', [JadwalController::class, 'deleteAll'])->name('jadwal.deleteAll');
       Route::resource('/jadwal', JadwalController::class);
-      Route::get('/ulangan-kelas', [UlanganController::class, 'create'])->name('ulangan-kelas');
-      Route::get('/ulangan-siswa/{id}', [UlanganController::class, 'edit'])->name('ulangan-siswa');
-      Route::get('/ulangan-show/{id}', [UlanganController::class, 'ulangan'])->name('ulangan-show');
       Route::get('/sikap-kelas', [SikapController::class, 'create'])->name('sikap-kelas');
       Route::get('/sikap-siswa/{id}', [SikapController::class, 'edit'])->name('sikap-siswa');
       Route::get('/sikap-show/{id}', [SikapController::class, 'sikap'])->name('sikap-show');
