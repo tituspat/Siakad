@@ -68,7 +68,6 @@ Route::get('/clear-cache', function () {
     Route::post('/pengaturan/ubah-password', [UserController::class, 'ubah_password'])->name('pengaturan.ubah-password');
 
     Route::resource('/data-spp', SppController::class);
-    Route::get('/spp/histori', [HistoryController::class, 'index'])->name('spp.history');
     Route::resource('/spp/pembayaran', PembayaranController::class);
 
 
@@ -112,7 +111,7 @@ Route::get('/clear-cache', function () {
     // Owner
     Route::middleware(['owner'])->group(function (){
       Route::get('/owner/data-siswa', [OwnerController::class, 'show'])->name('owner.data-siswa');
-      Route::get('/owner/data-keuangan', [OwnerController::class, 'keuangan'])->name('owner.data-keuangan');
+      Route::get('/owner/spp/histori', [SppController::class, 'owner'])->name('owner.spp.history');
     });
 
     
@@ -147,6 +146,8 @@ Route::get('/clear-cache', function () {
 
       // tagihan spp bulanan siswa
       Route::get('/tagihan/siswa', [SiswaController::class, 'tagihan'])->name('tagihan.siswa');
+      Route::get('/spp/confirm/{id}', [SppController::class, 'confirm'])->name('admin.spp.confirm');
+      Route::get('/spp/histori', [SppController::class, 'show'])->name('admin.spp.history');
 
 
       // data jadwal

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 
 use App\Models\Siswa;
+use App\Models\tagihan;
 use App\Models\Spp;
 
 class SppController extends Controller
@@ -73,9 +74,44 @@ class SppController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        $siswa=siswa::get();
+        $siswa_id=siswa::first();
+        $tagihan=tagihan::where('siswa_id', $siswa_id->id)->first();
+        $spp=spp::where('id', $siswa_id->id_spp)->first();
+
+        return view('admin.history.index', compact('siswa', 'tagihan', 'spp'));
+    }
+    public function owner()
+    {
+        $siswa=siswa::get();
+        $siswa_id=siswa::first();
+        $tagihan=tagihan::where('siswa_id', $siswa_id->id)->first();
+        $spp=spp::where('id', $siswa_id->id_spp)->first();
+
+        return view('admin.history.index', compact('siswa', 'tagihan', 'spp'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function confirm($id)
+    {
+        try {
+            $tagihan = Tagihan::findOrFail($id);
+            
+            // Ubah status tagihan berdasarkan status sebelumnya
+            $tagihan->status = ($tagihan->status == 'paid') ? 'unpaid' : 'paid';
+            $tagihan->save();
+    
+            return redirect()->back()->with('success', 'Status tagihan berhasil diubah.');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->back()->with('error', 'Tagihan tidak ditemukan.');
+        }
     }
 
     /**

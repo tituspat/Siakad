@@ -1,8 +1,7 @@
 @extends('template_backend.home')
-@section('heading', 'Nilai Rapot')
+@section('heading', 'SPP')
 @section('page')
-  <li class="breadcrumb-item active"><a href="{{ route('rapot-kelas') }}">Nilai Rapot</a></li>
-  <li class="breadcrumb-item active">{{ $kelas->nama_kelas }}</li>
+  <li class="breadcrumb-item active">SPP</li>
 @endsection
 @section('content')
 <div class="col-md-12">
@@ -10,7 +9,7 @@
     <div class="card">
       <div class="card-header">
         <h3 class="card-title">
-            <a href="{{ route('rapot-kelas') }}" class="btn btn-default btn-sm"><i class="nav-icon fas fa-arrow-left"></i> &nbsp; Kembali</a>
+            
         </h3>
       </div>
       <!-- /.card-header -->
@@ -23,7 +22,8 @@
                   <th>No.</th>
                   <th>Nama Siswa</th>
                   <th>No. Induk</th>
-                  <th>Aksi</th>
+                  <th>Nominal Tagihan</th>
+                  <th>Status Tagihan</th>
               </thead>
               <tbody>
                 @foreach ($siswa as $data)
@@ -31,7 +31,8 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $data->nama_siswa }}</td>
                     <td>{{ $data->no_induk }}</td>
-                    <td><a href="{{ route('rapot-show', Crypt::encrypt($data->id)) }}" class="btn btn-info btn-sm"><i class="nav-icon fas fa-search-plus"></i> &nbsp; Show Rapot</a></td>
+                    <td>{{ $data->spp->nominal }}</td>
+                    <td>{{-- $data->tagihan->status --}}</td>
                   </tr>
                 @endforeach
               </tbody>

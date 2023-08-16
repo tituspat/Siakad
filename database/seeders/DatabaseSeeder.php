@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
             KehadiranSeeder::class,
             HariSeeder::class,
             UsersSeeder::class,
-            KelasSeeder::class
+            KelasSeeder::class,
+            TagihanSeeder::class,
         ]);
     }
 }

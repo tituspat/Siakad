@@ -70,12 +70,6 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('tagihan.siswa') }}" class="nav-link" id="sppbulanansiswa">
-                                    <i class="	fas fa-coins nav-icon"></i>
-                                    <p>Spp Bulanan Siswa</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a href="{{ route('user.index') }}" class="nav-link" id="DataUser">
                                     <i class="fas fa-user-plus nav-icon"></i>
                                     <p>Data User</p>
@@ -97,9 +91,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('spp.history') }}" class="nav-link" id="HistoryPembayaran">
+                        <a href="{{ route('admin.spp.history') }}" class="nav-link" id="HistoryPembayaran">
                             <i class="fas fa-dollar-sign nav-icon"></i>
-                            <p>History Pembayaran SPP</p>
+                            <p>Pembayaran SPP</p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -199,7 +193,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('owner.data-siswa') }}" class="nav-link" id="DataKeuangan">
+                        <a href="{{ route('owner.spp.history') }}" class="nav-link" id="DataKeuangan">
                             <i class="fas fa-users nav-icon"></i>
                             <p>Data Keuangan</p>
                         </a>

@@ -1,14 +1,16 @@
 @extends('template_backend.home')
-@section('heading', 'Nilai Rapot')
+@section('heading', 'SPP')
 @section('page')
-  <li class="breadcrumb-item active">Nilai Rapot</li>
+  <li class="breadcrumb-item active">SPP</li>
 @endsection
 @section('content')
 <div class="col-md-12">
     <!-- general form elements -->
-    <div class="card card-primary">
+    <div class="card">
       <div class="card-header">
-        <h3 class="card-title">Nilai Rapot</h3>
+        <h3 class="card-title">
+            
+        </h3>
       </div>
       <!-- /.card-header -->
       <div class="card-body">
@@ -18,15 +20,21 @@
               <thead>
                 <tr>
                   <th>No.</th>
-                  <th>Nama Kelas</th>
+                  <th>Nama Siswa</th>
+                  <th>No. Induk</th>
+                  <th>Nominal Tagihan</th>
+                  <th>Status Tagihan</th>
                   <th>Aksi</th>
               </thead>
               <tbody>
-                @foreach ($kelas as $data)
+                @foreach ($siswa as $data)
                   <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $data->nama_kelas }}</td>
-                    <td><a href="{{ route('rapot-siswa', Crypt::encrypt($data->id)) }}" class="btn btn-info btn-sm"><i class="nav-icon fas fa-search-plus"></i> &nbsp; Details</a></td>
+                    <td>{{ $data->nama_siswa }}</td>
+                    <td>{{ $data->no_induk }}</td>
+                    <td>{{ $data->spp->nominal }}</td>
+                    <td>{{-- $data->tagihan->status --}}</td>
+                    <td><a href="{{ route('admin.spp.confirm', $tagihan->id) }}" class="btn btn-info btn-sm"><i class="nav-icon fas fa-exchange-alt"></i> &nbsp; GANTI STATUS</a></td>
                   </tr>
                 @endforeach
               </tbody>
@@ -41,8 +49,8 @@
 @endsection
 @section('script')
     <script>
-      $("#Nilai").addClass("active");
-      $("#liNilai").addClass("menu-open");
-      $("#Rapot").addClass("active");
+        $("#Nilai").addClass("active");
+        $("#liNilai").addClass("menu-open");
+        $("#Rapot").addClass("active");
     </script>
 @endsection
