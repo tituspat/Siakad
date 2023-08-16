@@ -12,7 +12,6 @@ use App\Models\Ruang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
-use PDF;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 
@@ -148,15 +147,6 @@ class JadwalController extends Controller
             );
         }
         return response()->json($newForm);
-    }
-
-    public function cetak_pdf(Request $request)
-    {
-        $jadwal = Jadwal::OrderBy('hari_id', 'asc')->OrderBy('jam_mulai', 'asc')->where('kelas_id', $request->id)->get();
-        $kelas = Kelas::findorfail($request->id);
-        $pdf = PDF::loadView('jadwal-pdf', ['jadwal' => $jadwal, 'kelas' => $kelas]);
-        return $pdf->stream();
-        // return $pdf->stream('jadwal-pdf.pdf');
     }
 
     public function guru()

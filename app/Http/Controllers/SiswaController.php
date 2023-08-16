@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use PDF;
 use App\Models\User;
 use App\Models\Kelas;
 use App\Models\Siswa;
@@ -198,15 +197,6 @@ class SiswaController extends Controller
         return response()->json($newForm);
     }
 
-    public function cetak_pdf(Request $request)
-    {
-        $siswa = siswa::OrderBy('nama_siswa', 'asc')->where('kelas_id', $request->id)->get();
-        $kelas = Kelas::findorfail($request->id);
-
-        $pdf = PDF::loadView('siswa-pdf', ['siswa' => $siswa, 'kelas' => $kelas]);
-        return $pdf->stream();
-        // return $pdf->stream('jadwal-pdf.pdf');
-    }
 
     public function kelas($id)
     {

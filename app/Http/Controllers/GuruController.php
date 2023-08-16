@@ -94,10 +94,6 @@ class GuruController extends Controller
             'foto' => $nameFoto
         ]);
 
-        Nilai::create([
-            'guru_id' => $guru->id
-        ]);
-
         return redirect()->back()->with('success', 'Berhasil menambahkan data guru baru!');
     }
 
