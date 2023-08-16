@@ -8,7 +8,7 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <a href="{{ route("guru.mapel", Crypt::encrypt($guru->mapel_id)) }}" class="btn btn-default btn-sm"><i class='nav-icon fas fa-arrow-left'></i> &nbsp; Kembali</a>
+
         </div>
         <div class="card-body">
             <div class="row no-gutters ml-2 mb-2 mr-2">
@@ -20,7 +20,6 @@
                     <h5 class="card-title card-text mb-2">Nama : {{ $guru->nama_guru }}</h5>
                     <h5 class="card-title card-text mb-2">NIP : {{ $guru->nip }}</h5>
                     <h5 class="card-title card-text mb-2">No Id Card : {{ $guru->id_card }}</h5>
-                    <h5 class="card-title card-text mb-2">Guru Mapel : {{ $guru->mapel->nama_mapel }}</h5>
                     <h5 class="card-title card-text mb-2">Kode Jadwal : {{ $guru->kode }}</h5>
                     @if ($guru->jk == 'L')
                         <h5 class="card-title card-text mb-2">Jenis Kelamin : Laki-laki</h5>
