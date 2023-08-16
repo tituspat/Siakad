@@ -34,7 +34,6 @@ Data Materi {{ $kelas->nama_kelas }}
                     <div class="video-wrapper">{!! $m->link_video !!}</div>
                     <h3>{{$m->link_materi}}</h3>
                     <h3>{{$m->judul}}</h3>
-                    <h3>{{$m->materi_baca}}</h3>
                     
                     <hr />
                 </div>
@@ -79,15 +78,6 @@ Data Materi {{ $kelas->nama_kelas }}
                     <div class="form-group">
                         <label for="link_materi">Link Materi Baca</label>
                         <input type="text" id="link_materi" name="link_materi" class="form-control @error('link_materi') is-invalid @enderror">
-                    </div>
-                    <div class="form-group">
-                        <label for="materi_baca">Materi Baca</label>
-                        <div class="input-group">
-                            <div class="custom-file">
-                                <input type="file" name="materi_baca" class="custom-file-input @error('materi_baca') is-invalid @enderror" id="materi_baca">
-                                <label class="custom-file-label" for="materi_baca">Choose file</label>
-                            </div>
-                        </div>
                     </div>
                     <div class="form-group">
                         <label for="text">Keterangan tambahan guru</label>

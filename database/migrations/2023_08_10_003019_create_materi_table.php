@@ -18,7 +18,6 @@ return new class extends Migration
 
             $table->string('link_video')->nullable();
             $table->string('link_materi')->nullable();
-            $table->string('materi_baca')->nullable();
             $table->integer('kelas_id')->nullable();
             
             $table->text('text')->nullable();

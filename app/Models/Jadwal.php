@@ -39,26 +39,6 @@ class Jadwal extends Model
     return $guru;
   }
 
-  public function ulangan($id)
-  {
-    $siswa = Siswa::where('no_induk', Auth::user()->no_induk)->first();
-    $nilai = Ulangan::where('siswa_id', $siswa->id)->where('mapel_id', $id)->first();
-    return $nilai;
-  }
-
-  public function nilai($id)
-  {
-    $siswa = Siswa::where('no_induk', Auth::user()->no_induk)->first();
-    $nilai = Rapot::where('siswa_id', $siswa->id)->where('mapel_id', $id)->first();
-    return $nilai;
-  }
-
-  public function kkm($id)
-  {
-    $kkm = Nilai::where('guru_id', $id)->first();
-    return $kkm['kkm'];
-  }
-
   public function absen($id)
   {
     $absen = Absen::where('tanggal', date('Y-m-d'))->where('guru_id', $id)->first();
@@ -68,20 +48,6 @@ class Jadwal extends Model
     } else {
       return false;
     }
-  }
-
-  public function cekUlangan($id)
-  {
-    $data = json_decode($id, true);
-    $ulangan = Ulangan::where('siswa_id', $data['siswa'])->where('mapel_id', $data['mapel'])->first();
-    return $ulangan;
-  }
-
-  public function cekRapot($id)
-  {
-    $data = json_decode($id, true);
-    $rapot = Rapot::where('siswa_id', $data['siswa'])->where('mapel_id', $data['mapel'])->first();
-    return $rapot;
   }
 
   protected $table = 'jadwal';

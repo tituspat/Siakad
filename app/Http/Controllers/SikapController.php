@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Auth;
-use App\Models\Mapel;
 use App\Models\Guru;
 use App\Models\Siswa;
 use App\Models\Kelas;

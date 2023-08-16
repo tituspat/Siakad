@@ -9,6 +9,7 @@ use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\Guru;
 use App\Models\test;
+use App\Models\nilai;
 use Auth;
 
 
@@ -38,13 +39,13 @@ class MateriController extends Controller
         $user = Auth::user(); // Mengambil data user yang sedang login
     
         if ($user) {
-            $siswa = Siswa::where('no_induk', $user->no_induk)->value('kelas_id');
-            $materi = Materi::where('kelas_id', $siswa)->get();
-            $kelas = Kelas::where('id', $siswa)->first();
+            $siswa = Siswa::where('no_induk', $user->no_induk)->first();
+            $materi = Materi::where('kelas_id', $siswa->kelas_id)->get();
+            $kelas = Kelas::where('id', $siswa->kelas_id)->first();
             
-        $test = test::where('kelas_id', $siswa)->first();
-
-            return view('siswa.materi.show', compact('materi', 'kelas', 'test'));
+            $test = test::where('kelas_id', $siswa->kelas_id)->first();
+            $nilai = Nilai::where('no_induk', $user->no_induk)->first();
+            return view('siswa.materi.show', compact('materi', 'kelas', 'test', 'nilai'));
         } else {
             // Tindakan yang akan diambil jika user tidak ditemukan (belum login)
             return redirect()->back()->with('error', 'Anda belum login atau data tidak ditemukan.');
@@ -53,8 +54,6 @@ class MateriController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-        ]);
 
         $embedCode = $this->embedVideo($request->link_video);
         $kelas_id = Kelas::where('nama_kelas', $request->nama_kelas)->value('id');
@@ -64,7 +63,6 @@ class MateriController extends Controller
             'kelas_id' => $kelas_id,
             'link_video' => $embedCode,
             'link_materi' => $request->link_materi,
-            'materi_baca' => $request->materi_baca,
             'text' => $request->text,
         ]);
 

@@ -33,6 +33,21 @@ class GuruController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+
+        $id = Crypt::decrypt($id);
+        $guru = Guru::findOrFail($id);
+        $kelas = Kelas::all();
+        return view('admin.guru.details', compact('guru', 'kelas'));
+    }
+    
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -53,7 +68,6 @@ class GuruController extends Controller
         $this->validate($request, [
             'id_card' => 'required',
             'nama_guru' => 'required',
-            'kode' => 'required|string|unique:guru|min:2|max:3',
             'jk' => 'required'
         ]);
 
@@ -72,9 +86,7 @@ class GuruController extends Controller
 
         $guru = Guru::create([
             'id_card' => $request->id_card,
-            'nip' => $request->nip,
             'nama_guru' => $request->nama_guru,
-            'kode' => $request->kode,
             'jk' => $request->jk,
             'telp' => $request->telp,
             'tmp_lahir' => $request->tmp_lahir,
@@ -89,20 +101,7 @@ class GuruController extends Controller
         return redirect()->back()->with('success', 'Berhasil menambahkan data guru baru!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
 
-        $id = Crypt::decrypt($id);
-        $guru = Guru::findOrFail($id);
-        $kelas = Kelas::all();
-        return view('admin.guru.details', compact('guru', 'kelas'));
-    }
 
     /**
      * Show the form for editing the specified resource.

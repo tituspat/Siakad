@@ -15,5 +15,15 @@ class soal extends Model
         return $this->belongsTo('App\Models\test')->withDefault();
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Event handler untuk mengubah jawaban_benar menjadi huruf kapital sebelum disimpan
+        self::saving(function ($model) {
+            $model->jawaban_benar = strtoupper($model->jawaban_benar);
+        });
+    }
+
     protected $table = 'soal';
 }

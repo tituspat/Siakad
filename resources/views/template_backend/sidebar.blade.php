@@ -11,7 +11,7 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
-            <!-- admin -->
+            <!-- admin section -->
                 @if (Auth::user()->role == 'Admin')
                     <li class="nav-item has-treeview" id="liDashboard">
                         <a href="#" class="nav-link" id="Dashboard">
@@ -109,7 +109,7 @@
                         </a>
                     </li>
 
-                    <!-- Guru  -->
+                    <!-- Guru section  -->
                 @elseif (Auth::user()->role == 'Guru' || Auth::user()->guru(Auth::user()->id_card))
                     <li class="nav-item has-treeview">
                         <a href="{{ url('/') }}" class="nav-link" id="Home">
@@ -145,7 +145,7 @@
                         </a>
                     </li>
 
-                    <!-- Siswa -->
+                    <!-- Siswa section -->
                 @elseif (Auth::user()->role == 'Siswa' && Auth::user()->siswa(Auth::user()->no_induk))
                     <li class="nav-item has-treeview">
                         <a href="{{ url('/') }}" class="nav-link" id="Home">
@@ -171,12 +171,9 @@
                             <p>Materi</p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="{{ route('rapot.siswa') }}" class="nav-link" id="RapotSiswa">
-                            <i class="fas fa-file-alt nav-icon"></i>
-                            <p>Rapot</p>
-                        </a>
-                    </li>
+
+
+                    <!-- owner section -->
                 @elseif (Auth::user()->role == 'Owner')
                     <li class="nav-item has-treeview" id="liDashboard">
                         <a href="#" class="nav-link" id="Dashboard">
@@ -199,6 +196,12 @@
                         <a href="{{ route('owner.data-siswa') }}" class="nav-link" id="DataSiswa">
                             <i class="fas fa-users nav-icon"></i>
                             <p>Data Siswa</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('owner.data-siswa') }}" class="nav-link" id="DataKeuangan">
+                            <i class="fas fa-users nav-icon"></i>
+                            <p>Data Keuangan</p>
                         </a>
                     </li>
                 @else

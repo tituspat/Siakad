@@ -71,83 +71,93 @@ Route::get('/clear-cache', function () {
     Route::get('/spp/histori', [HistoryController::class, 'index'])->name('spp.history');
     Route::resource('/spp/pembayaran', PembayaranController::class);
 
-    Route::resource('/materi', MateriController::class);
-
 
   // Siswa
     Route::middleware(['siswa'])->group(function () {
+      // data jadwal
       Route::get('/jadwal/siswa', [JadwalController::class, 'siswa'])->name('jadwal.siswa');
-      Route::get('/sikap/siswa', [SikapController::class, 'siswa'])->name('sikap.siswa');
-      Route::get('/rapot/siswa', [RapotController::class, 'siswa'])->name('rapot.siswa');
+
+      // data spp
       Route::get('/spp/siswa', [TagihanController::class, 'siswa'])->name('spp.siswa');
+
+      // data materi
       Route::get('/siswa/materi', [MateriController::class, 'siswa'])->name('materi.siswa');
-      Route::get('/test/mulai', [MateriController::class, 'show'])->name('test.mulai');
-      Route::post('/test/selesai/{id}', [testController::class, 'selesai'])->name('test.selesai');
+
+      // test
+      Route::get('/test/mulai/{id}', [testController::class, 'show'])->name('test.mulai');
+      Route::post('/test/selesai/{id}', [TestController::class, 'selesai'])->name('test.selesai');
 
     });
   // Guru
     Route::middleware(['guru'])->group(function () {
+      // data absen
       Route::get('/absen/harian', [SiswaController::class, 'absen'])->name('absen.harian');
       Route::post('/absen/simpan', [SiswaController::class, 'simpan'])->name('absen.simpan');
+
+      // data jadwal
       Route::get('/jadwal/guru', [JadwalController::class, 'guru'])->name('jadwal.guru');
+
+      // data materi
       Route::get('/guru/materi', [GuruController::class, 'materiKelas'])->name('materi.kelas.guru');
+      Route::post('materi/store', [MateriController::class, 'store'])->name('guru.materi.store');
       Route::get('/guru/materi/ajar/{id}', [GuruController::class, 'materiAjar'])->name('materi.ajar.guru');
-      Route::resource('/nilai', NilaiController::class);
+
+      // data test
       Route::resource('/test', TestController::class);
-      Route::post('/test/selesai/{id}', [TestController::class, 'selesai'])->name('test.selesai');
-      Route::resource('/sikap', SikapController::class);
-      Route::get('/rapot/predikat', [RapotController::class, 'predikat']);
-      Route::resource('/rapot', RapotController::class);
+
       Route::resource('/guru/soal', TestController::class);
+      
     });
+
     // Owner
     Route::middleware(['owner'])->group(function (){
       Route::get('/owner/data-siswa', [OwnerController::class, 'show'])->name('owner.data-siswa');
+      Route::get('/owner/data-keuangan', [OwnerController::class, 'keuangan'])->name('owner.data-keuangan');
     });
 
     
   // Admin
     Route::middleware(['admin'])->group(function () {
       Route::get('/admin/home', [HomeController::class, 'admin'])->name('admin.home');
+
+      // absensi
       Route::get('/siswa/absensi', [SiswaController::class, 'absensi'])->name('siswa.absensi');
       Route::get('/siswa/kehadiran/{id}', [SiswaController::class, 'kehadiran'])->name('siswa.kehadiran');
-      Route::get('/absen/json', [GuruController::class, 'json']);
+
+
+      // data guru
+      Route::resource('/guru', GuruController::class);
       Route::get('/guru/kelas/{id}', [GuruController::class, 'kelas'])->name('guru.kelas');
       Route::get('/guru/ubah-foto/{id}', [GuruController::class, 'ubah_foto'])->name('guru.ubah-foto');
       Route::post('/guru/update-foto/{id}', [GuruController::class, 'update_foto'])->name('guru.update-foto');
       Route::post('/guru/upload', [GuruController::class, 'upload'])->name('guru.upload');
-      Route::get('/guru/export_excel', [GuruController::class, 'export_excel'])->name('guru.export_excel');
-      Route::post('/guru/import_excel', [GuruController::class, 'import_excel'])->name('guru.import_excel');
       Route::delete('/guru/deleteAll', [GuruController::class, 'deleteAll'])->name('guru.deleteAll');
-      Route::resource('/guru', GuruController::class);
-      Route::get('/kelas/edit/json', [KelasController::class, 'getEdit']);
+      
+      // data kelas
       Route::resource('/kelas', KelasController::class);
+      Route::get('/kelas/edit/json', [KelasController::class, 'getEdit']);      
       Route::get('/siswa/kelas/{id}', [SiswaController::class, 'kelas'])->name('siswa.kelas');
       Route::get('/siswa/view/json', [SiswaController::class, 'view']);
-      Route::get('/listsiswapdf/{id}', [SiswaController::class, 'cetak_pdf']);
+
+      // data siswa
+      Route::resource('/siswa', SiswaController::class);
       Route::get('/siswa/ubah-foto/{id}', [SiswaController::class, 'ubah_foto'])->name('siswa.ubah-foto');
       Route::post('/siswa/update-foto/{id}', [SiswaController::class, 'update_foto'])->name('siswa.update-foto');
-      Route::get('/siswa/export_excel', [SiswaController::class, 'export_excel'])->name('siswa.export_excel');
-      Route::post('/siswa/import_excel', [SiswaController::class, 'import_excel'])->name('siswa.import_excel');
       Route::delete('/siswa/deleteAll', [SiswaController::class, 'deleteAll'])->name('siswa.deleteAll');
+
+      // tagihan spp bulanan siswa
       Route::get('/tagihan/siswa', [SiswaController::class, 'tagihan'])->name('tagihan.siswa');
-      Route::resource('/siswa', SiswaController::class);
-      Route::get('/mapel/getMapelJson', [MapelController::class, 'getMapelJson']);
-      Route::resource('/mapel', MapelController::class);
-      Route::get('/jadwal/view/json', [JadwalController::class, 'view']);
-      Route::get('/jadwalkelaspdf/{id}', [JadwalController::class, 'cetak_pdf']);
-      Route::get('/jadwal/export_excel', [JadwalController::class, 'export_excel'])->name('jadwal.export_excel');
-      Route::post('/jadwal/import_excel', [JadwalController::class, 'import_excel'])->name('jadwal.import_excel');
-      Route::delete('/jadwal/deleteAll', [JadwalController::class, 'deleteAll'])->name('jadwal.deleteAll');
+
+
+      // data jadwal
       Route::resource('/jadwal', JadwalController::class);
-      Route::get('/sikap-kelas', [SikapController::class, 'create'])->name('sikap-kelas');
-      Route::get('/sikap-siswa/{id}', [SikapController::class, 'edit'])->name('sikap-siswa');
-      Route::get('/sikap-show/{id}', [SikapController::class, 'sikap'])->name('sikap-show');
-      Route::get('/rapot-kelas', [RapotController::class, 'create'])->name('rapot-kelas');
-      Route::get('/rapot-siswa/{id}', [RapotController::class, 'edit'])->name('rapot-siswa');
-      Route::get('/rapot-show/{id}', [RapotController::class, 'rapot'])->name('rapot-show');
-      Route::get('/predikat', [NilaiController::class, 'create'])->name('predikat');
+      Route::get('/jadwal/view/json', [JadwalController::class, 'view']);
+      Route::delete('/jadwal/deleteAll', [JadwalController::class, 'deleteAll'])->name('jadwal.deleteAll');
+
+      // data materi
       Route::resource('/materi', MateriController::class);
+
+
       Route::resource('/user', UserController::class);
     });
   });

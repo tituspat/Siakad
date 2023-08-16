@@ -101,10 +101,6 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="nip">NIP</label>
-                        <input type="text" id="nip" name="nip" onkeypress="return inputAngka(event)" class="form-control @error('nip') is-invalid @enderror">
-                    </div>
-                    <div class="form-group">
                         <label for="kelas_id">kelas</label>
                         <select id="kelas_id" name="kelas_id" class="select2bs4 form-control @error('kelas_id') is-invalid @enderror">
                             <option value="">-- Pilih kelas --</option>
@@ -130,10 +126,6 @@
                     <div class="form-group">
                         <label for="id_card">Nomor ID Card</label>
                         <input type="text" id="id_card" name="id_card" maxlength="5" onkeypress="return inputAngka(event)" value="{{ $id_card }}" class="form-control @error('id_card') is-invalid @enderror" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="kode">Kode Jadwal</label>
-                        <input type="text" id="kode" name="kode" maxlength="3" onkeyup="this.value = this.value.toUpperCase()" class="form-control @error('kode') is-invalid @enderror">
                     </div>
                     <div class="form-group">
                         <label for="foto">File input</label>

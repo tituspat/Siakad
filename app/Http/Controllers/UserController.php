@@ -7,7 +7,6 @@ use Auth;
 use App\Models\User;
 use App\Models\Guru;
 use App\Models\Siswa;
-use App\Models\Mapel;
 use App\Models\Kelas;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
@@ -180,9 +179,8 @@ class UserController extends Controller
 
     public function edit_profile()
     {
-        $mapel = Mapel::all();
         $kelas = Kelas::all();
-        return view('user.profile', compact('mapel', 'kelas'));
+        return view('user.profile', compact('kelas'));
     }
 
     public function ubah_profile(Request $request)
@@ -190,7 +188,6 @@ class UserController extends Controller
         if (Auth::user()->role == 'Guru') {
             $this->validate($request, [
                 'name'      => 'required',
-                'mapel_id'  => 'required',
                 'jk'        => 'required',
                 'telp'      => 'required',
                 'tmp_lahir' => 'required',
@@ -206,7 +203,6 @@ class UserController extends Controller
             }
             $guru_data = [
                 'nama_guru' => $request->name,
-                'mapel_id'  => $request->mapel_id,
                 'jk'        => $request->jk,
                 'telp'      => $request->telp,
                 'tmp_lahir' => $request->tmp_lahir,
