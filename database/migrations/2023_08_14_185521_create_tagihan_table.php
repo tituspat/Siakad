@@ -13,13 +13,11 @@ return new class extends Migration
     {
         Schema::create('tagihan', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('siswa_id');
             $table->integer('spp_id');
             $table->date('jatuh_tempo');
-            $table->enum('status', ['unpaid', 'pending', 'paid'])->default('unpaid');
+            $table->enum('status', ['unpaid', 'paid'])->default('unpaid');
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

@@ -3,6 +3,8 @@
 namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
+use App\Models\Spp;
+use App\Models\Tagihan;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
@@ -10,20 +12,24 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      */
-    protected function schedule(Schedule $schedule): void
+    protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
-
         $schedule->call(function () {
-            $bills = Bill::where('status', 'unpaid')
-                ->where('due_date', '<=', Carbon::now())
-                ->get();
+            // Ambil siswa yang belum memiliki tagihan untuk bulan ini
+            $siswas = Siswa::doesntHave('tagihans')->get();
     
-            foreach ($bills as $bill) {
-                // Update status tagihan menjadi "pending" jika jatuh tempo sudah lewat
-                $bill->update(['status' => 'pending']);
+            foreach ($siswas as $siswa) {
+                $jenisSppLama = 'lama';
+                $nominalLama = 250000; // ganti dengan nominal yang sesuai
+    
+                Tagihan::create([
+                    'no_induk_siswa' => $siswa->id,
+                    'spp_id' => Spp::where('jenis_spp', $jenisSppLama)->first()->id,
+                    'jatuh_tempo' => now()->addDays(10), // Menambahkan tagihan pada tanggal 10 bulan berikutnya
+                    'status' => 'unpaid',
+                ]);
             }
-        })->monthly();
+        })->monthlyOn(10, '00:00');
     }
 
     /**

@@ -20,6 +20,10 @@ class Siswa extends Model
     {
         return $this->belongsTo('App\Models\spp')->withDefault();
     }
+    public function tagihan()
+    {
+        return $this->hasMany(Tagihan::class);
+    }
 
     public function ulangan($id)
     {

@@ -8,6 +8,7 @@ use App\Models\Siswa;
 use App\Models\Spp;
 use App\Models\Absen;
 use App\Models\Kehadiran;
+use App\Models\Tagihan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
@@ -73,7 +74,7 @@ class SiswaController extends Controller
             }
         }
 
-        Siswa::create([
+        $siswa = Siswa::create([
             'no_induk' => $request->no_induk,
             'nama_siswa' => $request->nama_siswa,
             'jk' => $request->jk,
@@ -84,6 +85,16 @@ class SiswaController extends Controller
             'id_spp' => $request->id_spp,
             'foto' => $nameFoto
         ]);
+
+            // Menambahkan tagihan otomatis
+        $jenisSppBaru = 'baru';
+        $nominalBaru = 300000; // ganti dengan nominal yang sesuai
+        $tagihan = Tagihan::create([
+        'siswa_id' => $siswa->id,
+        'spp_id' => $siswa->id_spp,
+        'jatuh_tempo' => now()->addDays(10), // Menambahkan tagihan pada tanggal saat ini
+        'status' => 'paid',
+    ]);
 
         return redirect()->back()->with('success', 'Berhasil menambahkan data siswa baru!');
     }
