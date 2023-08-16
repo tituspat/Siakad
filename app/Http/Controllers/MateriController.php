@@ -41,7 +41,10 @@ class MateriController extends Controller
             $siswa = Siswa::where('no_induk', $user->no_induk)->value('kelas_id');
             $materi = Materi::where('kelas_id', $siswa)->get();
             $kelas = Kelas::where('id', $siswa)->first();
-            return view('siswa.materi.show', compact('materi', 'kelas'));
+            
+        $test = test::where('kelas_id', $siswa)->first();
+
+            return view('siswa.materi.show', compact('materi', 'kelas', 'test'));
         } else {
             // Tindakan yang akan diambil jika user tidak ditemukan (belum login)
             return redirect()->back()->with('error', 'Anda belum login atau data tidak ditemukan.');

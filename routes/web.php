@@ -81,6 +81,8 @@ Route::get('/clear-cache', function () {
       Route::get('/rapot/siswa', [RapotController::class, 'siswa'])->name('rapot.siswa');
       Route::get('/spp/siswa', [TagihanController::class, 'siswa'])->name('spp.siswa');
       Route::get('/siswa/materi', [MateriController::class, 'siswa'])->name('materi.siswa');
+      Route::get('/test/mulai', [MateriController::class, 'show'])->name('test.mulai');
+      Route::post('/test/selesai/{id}', [testController::class, 'selesai'])->name('test.selesai');
 
     });
   // Guru
