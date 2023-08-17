@@ -123,13 +123,10 @@
                             <p>Jadwal Ajar</p>
                         </a>
                     </li>
-                    <li class="nav-item has-treeview" id="liNilaiGuru">
-                        <a href="#" class="nav-link" id="NilaiGuru">
-                            <i class="nav-icon fas fa-file-signature"></i>
-                            <p>
-                                Nilai
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
+                    <li class="nav-item">
+                        <a href="{{ route('guru.nilai') }}" class="nav-link" id="NilaiGuru">
+                            <i class="fas fa-calendar-alt nav-icon"></i>
+                            <p>Nilai</p>
                         </a>
                     </li>
                     <li class="nav-item">

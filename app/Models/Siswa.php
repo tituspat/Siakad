@@ -24,26 +24,5 @@ class Siswa extends Model
     {
         return $this->hasMany(Tagihan::class);
     }
-
-    public function ulangan($id)
-    {
-        $guru = Guru::where('id_card', Auth::user()->id_card)->first();
-        $nilai = Ulangan::where('siswa_id', $id)->where('guru_id', $guru->id)->first();
-        return $nilai;
-    }
-
-    public function sikap($id)
-    {
-        $guru = Guru::where('id_card', Auth::user()->id_card)->first();
-        $nilai = Sikap::where('siswa_id', $id)->where('guru_id', $guru->id)->first();
-        return $nilai;
-    }
-
-    public function nilai($id)
-    {
-        $guru = Guru::where('id_card', Auth::user()->id_card)->first();
-        $nilai = Rapot::where('siswa_id', $id)->where('guru_id', $guru->id)->first();
-        return $nilai;
-    }
     protected $table = 'siswa';
 }

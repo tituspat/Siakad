@@ -1,70 +1,53 @@
 @extends('template_backend.home')
-@section('heading', 'Data Kelas')
+@section('heading', 'SPP')
 @section('page')
-	<li class="breadcrumb-item active">SPP</li>
+  <li class="breadcrumb-item active">SPP</li>
 @endsection
-
 @section('content')
-
-	<div class="row">
-      <div class="col-md-12">
-			<div class="card">
-			   <div class="card-body">
-				   <div class="card-title">Data SPP</div>
-                           
-					<div class="table-responsive mb-3">
-                  <table class="table">
-                     <thead>
-                        <tr>
-                           <th scope="col">#</th>
-                           <th scope="col">TAHUN</th>
-							      <th scope="col">NOMINAL</th>
-                           <th scope="col">DIBUAT</th>
-					   	      <th scope="col"></th>                                        
-                        </tr>
-                     </thead>
-                     <tbody>
-							@php 
-						   	$i=1;
-							@endphp
-							@foreach($bills as $bill)
-                        <tr>					    
-                           <th scope="row">{{ $i }}</th>
-                           <td>{{ $bill->amount }}</td>
-							      <td>{{ $bill->jatuh_tempo }}</td>
-                           <td>{{ $bill->status }}</td>			
-                         </tr>
-							@php
-							$i++;
-							@endphp
-							@endforeach                                  
-                     </tbody>
-                  </table>
-               </div>
-				</div>
-			</div>
-		</div>
-   </div>
-
+<div class="col-md-12">
+    <!-- general form elements -->
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">
+            
+        </h3>
+      </div>
+      <!-- /.card-header -->
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+            <table id="example1" class="table table-bordered table-striped table-hover">
+              <thead>
+              <tr>
+                <th>No</th>
+                <th>Tanggal Jatuh Tempo</th>
+                <th>Jumlah Tagihan</th>
+                <th>Status</th>
+            </tr>
+              </thead>
+              <tbody>
+              @foreach($tagihan as $index => $item)
+            <tr>
+                <td>{{ $index + 1 }}</td>
+                <td>{{ $item->jatuh_tempo }}</td>
+                <td>Rp {{ number_format($item->spp->nominal) }}</td>
+                <td>{{ ucfirst($item->status) }}</td>
+            </tr>
+            @endforeach
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</div>
 @endsection
-
-@section('sweet')
-
-   function deleteData(id){
-      Swal.fire({
-               title: 'PERINGATAN!',
-               text: "Yakin ingin menghapus data SPP?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yakin',
-                cancelButtonText: 'Batal',
-            }).then((result) => {
-               if (result.value) {
-                     $('#delete'+id).submit();
-                  }
-               })
-   }
-   
+@section('script')
+    <script>
+        $("#Nilai").addClass("active");
+        $("#liNilai").addClass("menu-open");
+        $("#Rapot").addClass("active");
+    </script>
 @endsection

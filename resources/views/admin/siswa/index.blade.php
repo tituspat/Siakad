@@ -109,10 +109,6 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="nis">NISN</label>
-                        <input type="text" id="nis" name="nis" onkeypress="return inputAngka(event)" class="form-control @error('nis') is-invalid @enderror">
-                    </div>
-                    <div class="form-group">
                         <label for="kelas_id">Kelas</label>
                         <select id="kelas_id" name="kelas_id" class="select2bs4 form-control @error('kelas_id') is-invalid @enderror">
                             <option value="">-- Pilih Kelas --</option>

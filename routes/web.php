@@ -78,6 +78,7 @@ Route::get('/clear-cache', function () {
 
       // data spp
       Route::get('/spp/siswa', [TagihanController::class, 'siswa'])->name('spp.siswa');
+      Route::get('/siswa/spp/histori', [SppController::class, 'siswa'])->name('siswa.spp.history');
 
       // data materi
       Route::get('/siswa/materi', [MateriController::class, 'siswa'])->name('materi.siswa');
@@ -103,8 +104,10 @@ Route::get('/clear-cache', function () {
 
       // data test
       Route::resource('/test', TestController::class);
-
       Route::resource('/guru/soal', TestController::class);
+      
+      // data nilai
+      Route::get('/guru/nilai', [NilaiController::class, 'guru'])->name('guru.nilai');
       
     });
 

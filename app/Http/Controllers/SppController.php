@@ -83,6 +83,7 @@ class SppController extends Controller
 
         return view('admin.history.index', compact('siswa', 'tagihan', 'spp'));
     }
+
     public function owner()
     {
         $siswa=siswa::get();
@@ -154,6 +155,7 @@ class SppController extends Controller
             
             return redirect('dashboard/data-spp');
     }
+
             /**
      * Display a listing of the resource.
      *
