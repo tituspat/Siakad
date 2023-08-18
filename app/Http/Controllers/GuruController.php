@@ -5,18 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
-use App\models\User;
-use App\models\Guru;
-use App\models\Kelas;
-use App\models\Jadwal;
-use App\models\Absen;
-use App\models\Materi;
-use App\models\Kehadiran;
+use App\Models\User;
+use App\Models\Guru;
+use App\Models\Kelas;
+use App\Models\Jadwal;
+use App\Models\Absen;
+use App\Models\Materi;
+use App\Models\Kehadiran;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
-use App\models\Nilai;
-use App\models\test;
+use App\Models\Nilai;
+use App\Models\test;
 
 class GuruController extends Controller
 {
