@@ -16,7 +16,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\SppController;
 use App\Http\Controllers\HistoryController;
-use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\MateriController;
 use App\Http\Controllers\TagihanController;
 use App\Http\Controllers\TestController;
@@ -68,7 +67,6 @@ Route::get('/clear-cache', function () {
     Route::post('/pengaturan/ubah-password', [UserController::class, 'ubah_password'])->name('pengaturan.ubah-password');
 
     Route::resource('/data-spp', SppController::class);
-    Route::resource('/spp/pembayaran', PembayaranController::class);
 
 
   // Siswa
@@ -105,7 +103,7 @@ Route::get('/clear-cache', function () {
       // data test
       Route::resource('/test', TestController::class);
       Route::resource('/guru/soal', TestController::class);
-      
+
       // data nilai
       Route::get('/guru/nilai', [NilaiController::class, 'guru'])->name('guru.nilai');
       
@@ -113,7 +111,9 @@ Route::get('/clear-cache', function () {
 
     // Owner
     Route::middleware(['owner'])->group(function (){
-      Route::get('/owner/data-siswa', [OwnerController::class, 'show'])->name('owner.data-siswa');
+      Route::get('/owner/data-siswa', [OwnerController::class, 'index'])->name('owner.data-siswa');
+      Route::get('/owner/data-siswa/show/{id}', [OwnerController::class, 'show'])->name('owner.data-siswa.show');
+      Route::get('/owner/data-siswa/details/{id}', [OwnerController::class, 'details'])->name('owner.data-siswa.details');
       Route::get('/owner/spp/histori', [SppController::class, 'owner'])->name('owner.spp.history');
     });
 
