@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 
 use App\Models\Siswa;
-use App\Models\tagihan;
+use App\Models\Tagihan;
 use App\Models\Spp;
 
 class SppController extends Controller

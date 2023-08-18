@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Nilai;
-use App\Models\test;
+use App\Models\Test;
 
 class GuruController extends Controller
 {

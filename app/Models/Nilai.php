@@ -10,7 +10,7 @@ class Nilai extends Model
 
     public function test()
     {
-        return $this->belongsTo('App\Models\test')->withDefault();
+        return $this->belongsTo('App\Models\Test')->withDefault();
     }
 
     public function siswa()

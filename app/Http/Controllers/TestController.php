@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\soal;
+use App\Models\Soal;
 use App\Models\kelas;
 use App\Models\Test;
 use App\Models\Nilai;

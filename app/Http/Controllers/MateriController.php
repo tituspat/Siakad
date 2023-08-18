@@ -8,8 +8,8 @@ use App\Models\Materi;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\Guru;
-use App\Models\test;
-use App\Models\nilai;
+use App\Models\Test;
+use App\Models\Nilai;
 use Auth;
 
 
