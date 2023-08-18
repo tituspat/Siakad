@@ -14,20 +14,18 @@
                 <tr>
                     <th>Hari</th>
                     <th>Mata Pelajaran</th>
+                    <th>Guru</th>
                     <th>Jam Pelajaran</th>
-                    <th>Ruang Kelas</th>
+                    
                 </tr>
             </thead>
             <tbody>
                 @foreach ($jadwal as $data)
                 <tr>
                     <td>{{ $data->hari->nama_hari }}</td>
-                    <td>
-                        <h5 class="card-title">{{ $data->mapel->nama_mapel }}</h5>
-                        <p class="card-text"><small class="text-muted">{{ $data->guru->nama_guru }}</small></p>
-                    </td>
+                    <td>{{ $data->kelas->nama_kelas }}</td>
+                    <td>{{ $data->guru->nama_guru }}</td>
                     <td>{{ $data->jam_mulai }} - {{ $data->jam_selesai }}</td>
-                    <td>{{ $data->ruang->nama_ruang }}</td>
                 </tr>
                 @endforeach
             </tbody>

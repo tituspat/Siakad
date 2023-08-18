@@ -33,7 +33,6 @@
                     <tr>
                         <td>Mata Pelajaran</td>
                         <td>:</td>
-                        <td>{{ $guru->mapel->nama_mapel }}</td>
                     </tr>
                     <tr>
                         <td>Guru Mata Pelajaran</td>

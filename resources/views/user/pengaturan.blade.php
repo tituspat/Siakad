@@ -86,9 +86,6 @@
                     <hr>
 
                     @if (Auth::user()->role == 'Guru')
-                        <strong><i class="fas fa-book mr-1"></i> Guru Mapel</strong>
-                        <p class="text-muted">{{ Auth::user()->guru(Auth::user()->id_card)->mapel->nama_mapel }}</p>
-                        <hr>
                         <strong><i class="far fa-file-alt mr-1"></i> Kode Jadwal</strong>
                         <p class="text-muted">{{ Auth::user()->guru(Auth::user()->id_card)->kode }}</p>
                         <hr>

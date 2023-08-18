@@ -13,7 +13,6 @@
                     <th>Jam Pelajaran</th>
                     <th>Mata Pelajaran</th>
                     <th>Kelas</th>
-                    <th>Ruang Kelas</th>
                     <th>Ket.</th>
                   </tr>
                 </thead>
@@ -46,7 +45,6 @@
                               <p class="card-text"><small class="text-muted">{{ $data->guru->nama_guru }}</small></p>
                           </td>
                           <td>{{ $data->kelas->nama_kelas }}</td>
-                          <td>{{ $data->ruang->nama_ruang }}</td>
                           <td>
                             @if ($data->absen($data->guru_id))
                               <div style="margin-left:20px;width:30px;height:30px;background:#{{ $data->absen($data->guru_id) }}"></div>
@@ -191,9 +189,8 @@
                     $.each(data, function (index, val) {
                         html += "<tr>";
                           html += "<td>" + val.jam_mulai + ' - ' + val.jam_selesai + "</td>";
-                          html += "<td><h5 class='card-title'>" + val.mapel + "</h5><p class='card-text'><small class='text-muted'>" + val.guru + "</small></p></td>";
+                          html += "<td><p class='card-text'><small class='text-muted'>" + val.guru + "</small></p></td>";
                           html += "<td>" + val.kelas + "</td>";
-                          html += "<td>" + val.ruang + "</td>";
                           if (val.ket != null) {
                             html += "<td><div style='margin-left:20px;width:30px;height:30px;background:#"+val.ket+"'></div></td>";
                           } else {

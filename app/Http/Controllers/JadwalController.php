@@ -8,7 +8,6 @@ use App\Models\Hari;
 use App\Models\Kelas;
 use App\Models\Guru;
 use App\Models\Siswa;
-use App\Models\Ruang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
