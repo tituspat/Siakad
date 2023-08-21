@@ -39,49 +39,7 @@
 <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
 <!-- page script -->
 <script>
-  $(document).ready(function(){
-      $('#role').change(function(){
-          var kel = $('#role option:selected').val();
-          if (kel == "Guru") {
-            $("#noId").addClass("mb-3");
-            $("#noId").html(`
-              <input id="nomer" type="text" maxlength="5" onkeypress="return inputAngka(event)" placeholder="No Id Card" class="form-control @error('nomer') is-invalid @enderror" name="nomer" autocomplete="nomer">
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-id-card"></span>
-                </div>
-              </div>
-              `);
-            $("#pesan").html(`
-              @error('nomer')
-                <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-                </span>
-              @enderror
-            `);
-          } else if(kel == "Siswa") {
-            $("#noId").addClass("mb-3");
-            $("#noId").html(`
-              <input id="nomer" type="text" placeholder="No Induk Siswa" class="form-control" name="nomer" autocomplete="nomer">
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-id-card"></span>
-                </div>
-              </div>
-            `);
-            $("#pesan").html(`
-              @error('nomer')
-                <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-                </span>
-              @enderror
-            `);
-          } else {
-            $('#noId').removeClass("mb-3");
-            $('#noId').html('');
-          }
-      });
-  });
+  
   function inputAngka(e) {
     var charCode = (e.which) ? e.which : event.keyCode
     if (charCode > 31 && (charCode < 48 || charCode > 57)){

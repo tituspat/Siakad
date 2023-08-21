@@ -18,6 +18,7 @@ use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\MateriController;
 use App\Http\Controllers\TagihanController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\TugasController;
 
 
 
@@ -84,6 +85,10 @@ Route::get('/clear-cache', function () {
       Route::get('/test/mulai/{id}', [testController::class, 'show'])->name('test.mulai');
       Route::post('/test/selesai/{id}', [TestController::class, 'selesai'])->name('test.selesai');
 
+      // tugas
+      Route::get('siswa/tugas', [TugasController::class, 'siswaIndex'])->name('siswa.tugas.index');
+      Route::post('siswa/tugas{id}/post', [TugasController::class, 'siswaPost'])->name('siswa.tugas.post');
+
     });
   // Guru
     Route::middleware(['guru'])->group(function () {
@@ -102,6 +107,12 @@ Route::get('/clear-cache', function () {
       // data test
       Route::resource('/test', TestController::class);
       Route::resource('/guru/soal', TestController::class);
+
+      // data tugas
+      Route::post('guru/tugas/store', [TugasController::class, 'store'])->name('guru.tugas.store');
+      Route::get('guru/tugas', [TugasController::class, 'guruIndex'])->name('guru.tugas.index');
+      Route::get('guru/tugas/{id}', [TugasController::class, 'guruShow'])->name('guru.tugas.show');
+      Route::get('guru/tugas/{id}/nilai', [TugasController::class, 'guruNilai'])->name('guru.tugas.nilai');
 
       // data nilai
       Route::get('/guru/nilai', [NilaiController::class, 'guru'])->name('guru.nilai');
@@ -164,3 +175,7 @@ Route::get('/clear-cache', function () {
       Route::resource('/user', UserController::class);
     });
   });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

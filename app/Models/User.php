@@ -54,9 +54,4 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-
-    public function bills()
-    {
-        return $this->hasMany(Bill::class);
-    }
 }

@@ -19,7 +19,10 @@ Data Materi {{ $kelas->nama_kelas }}
                     <i class="nav-icon fas fa-folder-plus"></i> &nbsp; Tambah materi
                 </button>
                 <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target=".bd-soal-modal-lg">
-                    <i class="nav-icon fas fa-folder-plus"></i> &nbsp; Buat Soal
+                    <i class="nav-icon fas fa-folder-plus"></i> &nbsp; Buat Soal Test
+                </button>
+                <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target=".bd-tugas-modal-lg">
+                    <i class="nav-icon fas fa-folder-plus"></i> &nbsp; Buat Tugas
                 </button>
             </h3>
         </div>
@@ -158,6 +161,58 @@ Data Materi {{ $kelas->nama_kelas }}
                                 <button type="button" class="btn btn-primary" id="tambahSoal"><i class="nav-icon fas fa-save"></i> &nbsp; Tambah Soal</button>
                                 <button type="submit" class="btn btn-primary"><i class="nav-icon fas fa-save"></i> &nbsp; Simpan</button>
                             </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Extra large modal for Tugas -->
+    <div class="modal fade bd-tugas-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Tambah Tugas</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('guru.tugas.store') }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                        <div class="row soal">
+                            <div class="col-md-12">
+                                <div class="modal-header">
+                                </div>
+                                <br/>
+                                <div class="form-group" data-soal="1">
+                                    <label for="kelas">Kelas: </label>
+                                    <input type="text" id="kelas" name="kelas" class="form-control @error('kelas') is-invalid @enderror" readonly value="{{$kelas->nama_kelas}}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="judul_tugas">Judul Tugas:</label>
+                                    <input type="text" id="judul_tugas" name="judul_tugas" class="form-control @error('judul_tugas') is-invalid @enderror">
+                                </div>
+                                <div class="form-group">
+                                    <label for="file_pdf">File input</label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" name="file_pdf" class="custom-file-input @error('foto') is-invalid @enderror" id="file_pdf">
+                                            <label class="custom-file-label" for="file_pdf">Choose file</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="text">Keterangan:</label>
+                                    <textarea type="textarea" id="text" name="text" class="form-control @error('text') is-invalid @enderror" ></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class='nav-icon fas fa-arrow-left'></i> &nbsp; Kembali</button>
+                            <button type="submit" class="btn btn-primary"><i class="nav-icon fas fa-save"></i> &nbsp; Simpan</button>
                         </div>
                     </form>
                 </div>

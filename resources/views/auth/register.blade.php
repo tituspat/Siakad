@@ -7,6 +7,19 @@
   <form action="{{ route('register') }}" method="post">
     @csrf
     <div class="input-group mb-3">
+      <input id="name" type="text" placeholder="{{ __('Nama Siswa') }}" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" autocomplete="off">
+      <div class="input-group-append">
+        <div class="input-group-text">
+          <span class="fas fa-envelope"></span>
+        </div>
+      </div>
+      @error('name')
+        <span class="invalid-feedback" role="alert">
+          <strong>{{ $message }}</strong>
+        </span>
+      @enderror
+    </div>
+    <div class="input-group mb-3">
       <input id="email" type="email" placeholder="{{ __('E-Mail Address') }}" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="off">
       <div class="input-group-append">
         <div class="input-group-text">

@@ -51,72 +51,13 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        if ($data['role'] == 'Guru') {
-            $guru = Guru::where('id_card', $data['nomer'])->count();
-            if ($guru >= 1) {
-                $user = User::where('id_card', $data['nomer'])->count();
-                if ($user >= 1) {
-                    return Validator::make($data, [
-                        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                        'password' => ['required', 'string', 'min:8', 'confirmed'],
-                        'role' => ['required'],
-                        'nomer' => ['required'],
-                        'guru' => ['required'],
-                    ]);
-                } else {
-                    return Validator::make($data, [
-                        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                        'password' => ['required', 'string', 'min:8', 'confirmed'],
-                        'role' => ['required'],
-                        'nomer' => ['required'],
-                    ]);
-                }
-            } else {
-                return Validator::make($data, [
-                    'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                    'password' => ['required', 'string', 'min:8', 'confirmed'],
-                    'role' => ['required'],
-                    'nomer' => ['required'],
-                    'id_card' => ['required'],
-                ]);
-            }
-        } elseif ($data['role'] == 'Siswa') {
-            $siswa = Siswa::where('no_induk', $data['nomer'])->count();
-            if ($siswa >= 1) {
-                $user = User::where('no_induk', $data['nomer'])->count();
-                if ($user >= 1) {
-                    return Validator::make($data, [
-                        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                        'password' => ['required', 'string', 'min:8', 'confirmed'],
-                        'role' => ['required'],
-                        'nomer' => ['required'],
-                        'siswa' => ['required'],
-                    ]);
-                } else {
-                    return Validator::make($data, [
-                        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                        'password' => ['required', 'string', 'min:8', 'confirmed'],
-                        'role' => ['required'],
-                        'nomer' => ['required'],
-                    ]);
-                }
-            } else {
-                return Validator::make($data, [
-                    'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                    'password' => ['required', 'string', 'min:8', 'confirmed'],
-                    'role' => ['required'],
-                    'nomer' => ['required'],
-                    'no_induk' => ['required'],
-                ]);
-            }
-        } else {
-            return Validator::make($data, [
-                'name' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'password' => ['required', 'string', 'min:8', 'confirmed'],
-                'role' => ['required'],
-            ]);
-        }
+       
+        return Validator::make($data, [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'role' => ['required'],
+        ]);
     }
 
     /**
@@ -126,31 +67,12 @@ class RegisterController extends Controller
      * @return \App\Models\User
      */
     protected function create(array $data)
-    {
-        if ($data['role'] == 'Guru') {
-            $guruId = Guru::where('id_card', $data['nomer'])->get();
-            foreach ($guruId as $val) {
-                $guru = Guru::findorfail($val->id);
-            }
-            return User::create([
-                'name' => $guru->nama_guru,
-                'email' => $data['email'],
-                'password' => Hash::make($data['password']),
-                'role' => $data['role'],
-                'id_card' => $data['nomer'],
-            ]);
-        } else {
-            $siswaId = Siswa::where('no_induk', $data['nomer'])->get();
-            foreach ($siswaId as $val) {
-                $siswa = Siswa::findorfail($val->id);
-            }
-            return User::create([
-                'name' => strtolower($siswa->nama_siswa),
-                'email' => $data['email'],
-                'password' => Hash::make($data['password']),
-                'role' => $data['role'],
-                'no_induk' => $data['nomer'],
-            ]);
-        }
+    { 
+        return User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'role' => $data['role'],
+        ]);
     }
 }

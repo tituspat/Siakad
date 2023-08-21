@@ -11,6 +11,7 @@ use App\Models\Guru;
 use App\Models\Test;
 use App\Models\Nilai;
 use Auth;
+use PDF;
 
 
 use Illuminate\Support\Facades\Crypt;
@@ -54,6 +55,14 @@ class MateriController extends Controller
 
     public function store(Request $request)
     {
+
+        $request->validate([
+            'judul' => 'required|string|max:255',
+            'kelas_id' => 'string|max:255',
+            'link_video' => '',
+            'link_materi' => '',
+            'text' => '',
+        ]);
 
         $embedCode = $this->embedVideo($request->link_video);
         $kelas_id = Kelas::where('nama_kelas', $request->nama_kelas)->value('id');

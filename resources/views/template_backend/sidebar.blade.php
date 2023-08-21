@@ -135,6 +135,12 @@
                             <p>Materi Kelas</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('guru.tugas.index') }}" class="nav-link" id="MateriGuru">
+                            <i class="fas fa-calendar-alt nav-icon"></i>
+                            <p>Tugas Kelas</p>
+                        </a>
+                    </li>
 
                     <!-- Siswa section -->
                 @elseif (Auth::user()->role == 'Siswa' && Auth::user()->siswa(Auth::user()->no_induk))
@@ -160,6 +166,12 @@
                         <a href="{{ route('materi.siswa') }}" class="nav-link" id="Elearning">
                             <i class="fas fa-file-alt nav-icon"></i>
                             <p>Materi</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('siswa.tugas.index') }}" class="nav-link" id="Elearning">
+                            <i class="fas fa-file-alt nav-icon"></i>
+                            <p>Tugas</p>
                         </a>
                     </li>
 

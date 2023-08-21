@@ -12,7 +12,7 @@ class Soal extends Model
 
     public function test()
     {
-        return $this->belongsTo('App\Models\test')->withDefault();
+        return $this->belongsTo('App\Models\Test')->withDefault();
     }
 
     protected static function boot()
