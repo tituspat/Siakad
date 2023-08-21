@@ -156,6 +156,7 @@ Route::get('/clear-cache', function () {
       Route::get('/siswa/ubah-foto/{id}', [SiswaController::class, 'ubah_foto'])->name('siswa.ubah-foto');
       Route::post('/siswa/update-foto/{id}', [SiswaController::class, 'update_foto'])->name('siswa.update-foto');
       Route::delete('/siswa/deleteAll', [SiswaController::class, 'deleteAll'])->name('siswa.deleteAll');
+      Route::post('/confirm/siswa/{id}', [SiswaController::class, 'confirm'])->name('confirm.siswa');
 
       // tagihan spp bulanan siswa
       Route::get('/tagihan/siswa', [SiswaController::class, 'tagihan'])->name('tagihan.siswa');

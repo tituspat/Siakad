@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Guru;
 use App\Models\Siswa;
 use App\Models\Kelas;
+use App\Models\Spp;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Http\Request;
@@ -108,13 +109,16 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        $kelas = Kelas::all();
         $id = Crypt::decrypt($id);
+        $SPP = Spp::all();
+
         if ($id == "Admin" && Auth::user()->role == "Operator") {
             return redirect()->back()->with('warning', 'Maaf halaman ini hanya bisa di akses oleh Admin!');
         } else {
             $user = User::where('role', $id)->get();
             $role = $user->groupBy('role');
-            return view('admin.user.show', compact('user', 'role'));
+            return view('admin.user.show', compact('user', 'role',  'kelas', 'SPP'));
         }
     }
 

@@ -281,4 +281,55 @@ class SiswaController extends Controller
             return redirect()->back()->with('warning', 'Data table siswa kosong!');
         }
     }
+
+
+    public function confirm(Request $request, $id)
+    {
+        $requestData = $request->all();
+
+        $calonSiswa = Users::where('id', $id)->get();
+
+        if ($request->foto) {
+            $foto = $request->foto;
+            $new_foto = date('siHdmY') . "_" . $foto->getClientOriginalName();
+            $foto->move('uploads/siswa/', $new_foto);
+            $nameFoto = 'uploads/siswa/' . $new_foto;
+        } else {
+            if ($request->jk == 'L') {
+                $nameFoto = 'uploads/siswa/52471919042020_male.jpg';
+            } else {
+                $nameFoto = 'uploads/siswa/50271431012020_female.jpg';
+            }
+        }
+
+        // Data untuk tabel users
+        $userData = [
+            'no_induk' => $requestData['no_induk'],
+        ];
+
+        $kelas_id = Kelas::where('nama_kelas', $requestData['kelas'])->value('id') ;
+        $id_spp = Spp::where('nominal', $requestData['spp'])->value('id') ;
+
+        // Data untuk tabel siswa
+        $siswaData = [
+            'no_induk' => $request->no_induk,
+            'nama_siswa' => $request->nama_siswa,
+            'jk' => $request->jk,
+            'kelas_id' => $request->kelas_id,
+            'telp' => $request->telp,
+            'tmp_lahir' => $request->tmp_lahir,
+            'tgl_lahir' => $request->tgl_lahir,
+            'id_spp' => $request->id_spp,
+            'foto' => $nameFoto
+        ];
+
+        $user=User::findOrFail($id);
+        $user->update($userData);
+
+        // Buat data baru pada tabel siswa
+        $siswaData['no_induk'] = $user->no_induk; // Asosiasikan dengan user yang baru dibuat atau diupdate
+        Siswa::create($siswaData);
+
+        return redirect()->back()->with('success', 'Data berhasil diupdate dan dibuat baru.');
+    }
 }
