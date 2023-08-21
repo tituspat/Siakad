@@ -52,8 +52,9 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('guru.tugas.nilai', $data->id ) }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('guru.tugas.nilai', $data->id ) }}" method="post">
                     @csrf
+                    @method('PUT')
                         <div class="row soal">
                             <div class="col-md-12">
                                 <div class="modal-header">

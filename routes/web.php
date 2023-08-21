@@ -112,7 +112,7 @@ Route::get('/clear-cache', function () {
       Route::post('guru/tugas/store', [TugasController::class, 'store'])->name('guru.tugas.store');
       Route::get('guru/tugas', [TugasController::class, 'guruIndex'])->name('guru.tugas.index');
       Route::get('guru/tugas/{id}', [TugasController::class, 'guruShow'])->name('guru.tugas.show');
-      Route::get('guru/tugas/{id}/nilai', [TugasController::class, 'guruNilai'])->name('guru.tugas.nilai');
+      Route::put('guru/tugas/{id}/nilai', [TugasController::class, 'guruNilai'])->name('guru.tugas.nilai');
 
       // data nilai
       Route::get('/guru/nilai', [NilaiController::class, 'guru'])->name('guru.nilai');

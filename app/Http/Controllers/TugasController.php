@@ -72,8 +72,17 @@ class TugasController extends Controller
         return view('guru.tugas.show', compact('guru', 'kelas', 'tugas', 'jawaban', 'siswa'));
     }
 
-    public function guruNilai($id)
+    public function guruNilai(Request $request, $id)
     {
+
+        $data = JawabanTugas::findOrFail($id);
+        $request->validate([
+            'nilai' => 'required|integer|max:100',
+        ]);
+
+        $data->nilai = $request->nilai;
+
+        $data->save();
 
         return redirect()->back()->with('success', 'File berhasil diunggah dan disimpan.');
     
